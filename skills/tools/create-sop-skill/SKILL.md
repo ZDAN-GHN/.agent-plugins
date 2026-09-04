@@ -1,7 +1,6 @@
 ---
 name: create-sop-skill
 description: 按业界最佳实践创建、设计或重构 SOP 类 Agent Skill（技能）。
-user-invocable: true
 disable-model-invocation: true
 ---
 

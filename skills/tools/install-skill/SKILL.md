@@ -1,6 +1,6 @@
 ---
 name: install-skill
-description: Use when given a skill URL or GitHub path to install. Installs to ~/.agent-plugins/skills/<category>/ first, then optionally links to any installed agent's user-level skill directory (Claude Code, Codex, DSH, pi) or the current project.
+description: Use when given a skill URL, GitHub path, or skills.sh package (owner/repo@skill, e.g. handed off from find-skills after user confirmation) to install. Installs to ~/.agent-plugins/skills/<category>/ first, then optionally links to any installed agent's user-level skill directory (Claude Code, Codex, DSH, pi) or the current project.
 disable-model-invocation: true
 ---
 
@@ -46,6 +46,10 @@ fi
    - 支持 GitHub URL（`https://github.com/owner/repo/tree/main/skills/skill-name`）
    - 支持 GitHub 路径（`owner/repo/path/to/skill`）
    - 支持本地路径
+   - 支持 skills.sh 格式 `owner/repo@skill-name`（常见于 find-skills 联动移交）：
+     - `owner/repo` 即 GitHub 仓库，`@` 后为技能名
+     - 定位技能目录：优先探测约定路径 `skills/<skill-name>`（`gh api repos/owner/repo/contents/skills/<skill-name>`）；未命中则列出 repo 目录，查找包含 SKILL.md 的技能目录
+     - 解析出目录后，等价于一个 GitHub 路径来源，继续走后续流程
 
 2. **推断分类，让用户确认**
    - 根据 skill 名称和 SKILL.md 内容推断分类（browser/process/creative/tools）
@@ -63,7 +67,7 @@ fi
    - 下载到 `~/.agent-plugins/skills/<category>/<skill-name>/`
    - 验证 SKILL.md 存在
 
-4. **询问是否链接到 Agent 技能目录**
+5. **询问是否链接到 Agent 技能目录**
    - 询问：是否软链到 Agent 的技能目录？
    - 让用户选择目标 Agent（Claude Code / Codex / DSH / pi，可多选）和级别（全局 / 项目）
    - 如果是 → 执行软链（复用 link-skills 的逻辑）
@@ -188,6 +192,7 @@ create_link() {
 ## Common Mistakes
 
 ❌ 直接安装到任何 Agent 的技能目录（`~/.claude/skills/`、`~/.codex/skills/`、`~/.dsh/skills/`、`~/.pi/agent/skills/`）→ 必须先到 `~/.agent-plugins/skills/<category>/`
+❌ 收到 `owner/repo@skill` 格式直接当作文件路径处理 → 先解析成 GitHub repo + 技能名，再定位技能目录
 ❌ 不询问分类直接安装 → 必须让用户确认分类
 ❌ 跳过询问是否链接 → 必须询问，不能假设用户意图
 ❌ 不检查重复直接覆盖 → 已存在时必须询问用户如何处理
