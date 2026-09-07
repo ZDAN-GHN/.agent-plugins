@@ -9,8 +9,7 @@ description: >
   project overview", and "make this repo easier to understand". Adapts to
   libraries, CLI tools, apps, research repos, browser extensions, internal
   tools, monorepos, and bilingual README workflows.
-license: MIT
-compatibility: Portable across Agent Skills-compatible agents. The core workflow avoids product-specific UI features; the optional scan script works best with bash, git, python3, and rg, and degrades to manual inspection when unavailable.
+disable-model-invocation: true
 ---
 
 # README Crafter
