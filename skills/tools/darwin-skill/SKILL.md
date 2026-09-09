@@ -1,6 +1,7 @@
 ---
 name: darwin-skill
 description: "Darwin Skill 2.0 (达尔文.skill 2.0): autonomous skill optimizer, v2.0 integrates Microsoft Research SkillLens (arXiv 2605.23899) 9-dim rubric + SkillOpt (arXiv 2605.23904) validation-gated design + human-in-the-loop checkpoints. Evaluates SKILL.md files using a 9-dimension rubric (structure + effectiveness + meta-skill blacklists), runs hill-climbing with git version control, spawns independent judge agents for blind evaluation, validates improvements through test prompts with auto-break on diminishing returns, and generates visual result cards. Use when user mentions \"优化skill\", \"skill评分\", \"自动优化\", \"auto optimize\", \"skill质量检查\", \"达尔文\", \"darwin\", \"帮我改改skill\", \"skill怎么样\", \"提升skill质量\", \"skill review\", \"skill打分\"."
+disable-model-invocation: true
 ---
 
 # Darwin Skill 2.0
@@ -208,6 +209,16 @@ for each skill:
     编辑 SKILL.md
     git add + commit（message: "optimize {skill}: {改进摘要}"）
 
+    # Step 3.5: skill-quality-auditor 自检
+    调用 skill-quality-auditor 对刚修改的 skill 做一次只读质量审查：
+      - 目标：当前 skill 目录
+      - 模式：定向复审（聚焦本轮改动是否引入新问题）
+    审查结果处理：
+      - 结论为「通过」或「修改后通过」→ 继续进入 Step 4 paired 评估
+      - 结论为「不通过」且有 [阻断] 或 [高] 级发现 → 根据审查建议修复后重新 commit，再进 Step 4
+      - 仅有 [中] 或 [低] 级发现 → 记录到 results.tsv 的 note 列（`audit=<severity>`），不阻塞流程
+    🔴 自检不可跳过：即使本轮改动很小（如只加标记），也必须跑一次 auditor，防止退化累积。
+
     # Step 4: Paired 重新评估（取代绝对重打分——绝对分数 judge 噪音 ±8、淹没保守编辑的 +3~8 真实增益）
     spawn N=3 独立 judge，每个【同一次 call 内】读两版：
       - 改前版：git show HEAD:<skill-path>/SKILL.md（上一个 kept commit）
@@ -383,6 +394,7 @@ paired 行：`new_score` 栏记 vote 比数（如 `3-0 better`），`note` 记�
 | 6 | **dry_run 比例 > 30%** | dim8 实测维度形同虚设，分数虚高（早期 40 次记录 67% dry_run，0 revert） | 强制至少 1 个真实 full_test；dry_run 多的优化在 results.tsv 显式打 ⚠️ |
 | 7 | **静默跳过异常** | 遇到 git/tsv 异常时静默继续，破坏 ratchet 完整性 | 异常表 10 条 fallback 必须先告知用户再处理 |
 | 8 | **忽视维度相关性单独优化** | dim2/3/4 是相关簇，单独优化 dim2 时常发现已被前轮 dim3 修复推到顶 | 找最大加权短板维度时同时看相关簇短板，决定是否同步改 |
+| 9 | **跳过 skill-quality-auditor 自检** | 改完直接进 paired 评估，可能引入 frontmatter 漂移、触发词缺失、红线遗漏等结构性退化，paired judge 不查这些 | 每轮 Step 3 后必须跑一次 auditor（定向复审），[阻断]/[高] 级发现必须先修复再进 Step 4 |
 
 **触发场景**：每轮 Phase 2 改动前对照本表一次。任一反模式命中 → 改方案重写。
 
@@ -398,6 +410,7 @@ paired 行：`new_score` 栏记 vote 比数（如 `3-0 better`），`note` 记�
 6. **可回滚** — 所有改动在git分支上，用git revert而非reset --hard
 7. **评分独立性** — 效果维度必须用子agent或至少干跑验证，不能在同一上下文里「改完直接评」
 8. **Runtime 中立性** — skill 必须能在 Claude Code、Codex、Cursor、OpenClaw、Hermes 等任何 skills-compatible runtime 中正常运行。除非 skill 名明确绑定单一 runtime（如 `xxx-codex`、`huashu-slides-codex`），任何「在 Claude Code 里」「Claude Code skill」「单一 badge 钉死」「安装命令只给 `.claude/skills/` 一种路径」都视为 gate 不通过，须在 P0 优先修复（详见「Runtime 适配性审查」章节）
+9. **改后必审** — 每轮 Phase 2 改动后必须调用 skill-quality-auditor 做一次定向复审，确认改动未引入阻断或高级别问题，再进入 paired 评估
 
 ---
 
