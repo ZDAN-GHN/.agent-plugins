@@ -6,7 +6,7 @@
 @AGENTS.md
 ```
 
-详细规则放在 `docs/ai-rules/`，按任务需要阅读，不要把所有规则复制进本文件。
+详细规则放在 `.agents/rules/`，按任务需要阅读，不要把所有规则复制进本文件。
 
 ## 必须遵守
 
@@ -21,17 +21,17 @@
 
 ## 按需阅读
 
-- 工程化配置、脚本、依赖、CI：`docs/ai-rules/engineering.md`
-- 项目已有方案、权限安全边界、不能擅自决定的事项：`docs/ai-rules/project-boundaries.md`
-- TypeScript 类型、模块、错误处理：`docs/ai-rules/typescript.md`
-- 接口开发、联调、请求封装、字段变更：`docs/ai-rules/api-contracts.md`
-- 前端页面、组件、状态、数据请求：`docs/ai-rules/frontend.md`
-- 管理后台 UI、数据列表、表单、筛选、移动端适配：`docs/ai-rules/admin-ui.md`
-- 后端路由、服务、数据访问、鉴权：`docs/ai-rules/backend.md`
-- 数据库 schema、迁移、seed、数据访问：`docs/ai-rules/database.md`
-- 错误码、异常处理、错误响应：`docs/ai-rules/errors.md`
-- 日志、审计、链路追踪、敏感信息脱敏：`docs/ai-rules/logging.md`
-- 测试新增、修复、重构：`docs/ai-rules/testing.md`
+- 工程化配置、脚本、依赖、CI：`.agents/rules/engineering.md`
+- 项目已有方案、权限安全边界、不能擅自决定的事项：`.agents/rules/project-boundaries.md`
+- TypeScript 类型、模块、错误处理：`.agents/rules/typescript.md`
+- 接口开发、联调、请求封装、字段变更：`.agents/rules/api-contracts.md`
+- 前端页面、组件、状态、数据请求：`.agents/rules/frontend.md`
+- 管理后台 UI、数据列表、表单、筛选、移动端适配：`.agents/rules/admin-ui.md`
+- 后端路由、服务、数据访问、鉴权：`.agents/rules/backend.md`
+- 数据库 schema、迁移、seed、数据访问：`.agents/rules/database.md`
+- 错误码、异常处理、错误响应：`.agents/rules/errors.md`
+- 日志、审计、链路追踪、敏感信息脱敏：`.agents/rules/logging.md`
+- 测试新增、修复、重构：`.agents/rules/testing.md`
 
 ## 默认工程栈
 

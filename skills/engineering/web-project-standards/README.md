@@ -2,7 +2,7 @@
 
 面向 Web 全栈项目的 Codex Skill，用于生成和维护 AI 友好的项目规则。
 
-默认目标是 TypeScript 全栈项目：前端、后端、共享 API contract、数据库、测试、工程化配置和管理后台 UI 都有明确规范。生成后的规则以 `AGENTS.md` 作为入口，详细规范放在 `docs/ai-rules/` 中按需阅读。
+默认目标是 TypeScript 全栈项目：前端、后端、共享 API contract、数据库、测试、工程化配置和管理后台 UI 都有明确规范。生成后的规则以 `AGENTS.md` 作为入口，详细规范放在 `.agents/rules/` 中按需阅读。
 
 ## 适用场景
 
@@ -15,7 +15,7 @@
 ## 核心原则
 
 - `AGENTS.md` 保持短小，只作为入口和路由图。
-- 长规则、示例和验收标准放进 `docs/ai-rules/`。
+- 长规则、示例和验收标准放进 `.agents/rules/`。
 - 前端和后端必须共享 API contract。
 - Request/response schema 和推导类型必须位于共享 contract 层。
 - 前端代码禁止手写后端响应类型。
@@ -38,22 +38,23 @@
 ## 生成结构
 
 ```txt
-AGENTS.md
-CLAUDE.md
-docs/
-  ai-rules/
-    README.md
-    engineering.md
-    project-boundaries.md
-    typescript.md
-    api-contracts.md
-    frontend.md
-    admin-ui.md
-    backend.md
-    database.md
-    errors.md
-    logging.md
-    testing.md
+.
+├── AGENTS.md
+├── CLAUDE.md
+└── .agents/
+    └── rules/
+        ├── README.md
+        ├── engineering.md
+        ├── project-boundaries.md
+        ├── typescript.md
+        ├── api-contracts.md
+        ├── frontend.md
+        ├── admin-ui.md
+        ├── backend.md
+        ├── database.md
+        ├── errors.md
+        ├── logging.md
+        └── testing.md
 ```
 
 ## 规则文件
@@ -104,7 +105,7 @@ Use $web-project-standards to create AGENTS.md and CLAUDE.md rules for this Type
 
 - `assets/AGENTS.template.md`：项目入口规则模板
 - `assets/CLAUDE.template.md`：Claude Code 入口模板
-- `assets/docs/ai-rules/`：详细规则模板
+- `assets/.agents/rules/`：详细规则模板
 - `agents/openai.yaml`：Codex 展示信息和默认提示词
 
 ## 安全边界
