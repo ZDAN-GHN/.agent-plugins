@@ -8,9 +8,9 @@ This skill takes the current conversation context and codebase understanding and
 
 ## Initialization self-check
 
-Before exploring or drafting, read `docs/agents/issue-tracker.md` and `docs/agents/triage-labels.md` when they exist. If either tracker setup file is missing, read [`../../assets/issue-tracker/SETUP.md`](../../assets/issue-tracker/SETUP.md) and execute its setup flow immediately. The setup flow may ask only the minimum tracker or label-mapping question needed to publish safely. Reread the resulting files before continuing; do not tell the user to invoke a removed setup skill.
+Before exploring or drafting, read `docs/agents/issue-tracker.md` and `docs/agents/triage-labels.md` when they exist. If either tracker setup file is missing, read [`issue-tracker/SETUP.md`](issue-tracker/SETUP.md) and execute its setup flow immediately. The setup flow may ask only the minimum tracker or label-mapping question needed to publish safely. Reread the resulting files before continuing; do not tell the user to invoke a removed setup skill.
 
-Use the selected backend's detailed reference (`../../assets/issue-tracker/issue-tracker-github.md`, `issue-tracker-gitlab.md`, or `issue-tracker-local.md`) whenever the repository configuration points to that backend or an operation is unclear.
+Use the selected backend's detailed reference (`issue-tracker/issue-tracker-github.md`, `issue-tracker-gitlab.md`, or `issue-tracker-local.md`) whenever the repository configuration points to that backend or an operation is unclear.
 
 ## Process
 

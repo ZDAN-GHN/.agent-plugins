@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
-Before resolving issue references, read `docs/agents/issue-tracker.md` and use its declared workflow. If it is missing, read [`../../assets/issue-tracker/SETUP.md`](../../assets/issue-tracker/SETUP.md), execute the tracker setup flow, and reread the resulting file before continuing.
+Before resolving issue references, read `docs/agents/issue-tracker.md` and use its declared workflow. If it is missing, read [`issue-tracker/SETUP.md`](issue-tracker/SETUP.md), execute the tracker setup flow, and reread the resulting file before continuing.
 
 ## Process
 
