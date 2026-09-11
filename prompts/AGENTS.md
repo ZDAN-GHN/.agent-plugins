@@ -54,6 +54,9 @@
 
 需要历史背景 / 长期偏好 / 旧决策时，先检索外置记忆再下结论
 
+## Git 提交格式
+所有由 Agent 参与或生成的提交，必须在 commit message 末尾添加 Assisted-by: <agent-name>/<model-id>（如 Assisted-by: Claude Code/claude-sonnet-4-5-20250929）标明本次改动的 Agent 身份；不要用 Co-authored-by 替代，Signed-off-by 仍由人类添加。
+
 ## Git 可溯源
 
 - 每次改动完成后，必须创建对应的 Git commit，以便后续追踪和回滚
