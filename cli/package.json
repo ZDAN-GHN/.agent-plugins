@@ -1,11 +1,11 @@
 {
-  "name": "agentctl",
+  "name": "clix",
   "version": "0.1.0",
   "private": true,
   "description": "Manage and inspect command-line tools used by agents.",
   "type": "module",
   "bin": {
-    "agentctl": "src/main.js"
+    "clix": "src/main.js"
   },
   "files": [
     "src",

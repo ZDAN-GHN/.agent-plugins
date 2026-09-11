@@ -8,17 +8,17 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const VERSION = "0.1.0";
-const CONFIG_DIR = join(homedir(), ".config", "agentctl");
+const CONFIG_DIR = join(homedir(), ".config", "clix");
 const GLOBAL_MANIFEST = join(CONFIG_DIR, "manifest.toml");
-const PROJECT_MANIFEST = join(process.cwd(), ".agentctl", "manifest.toml");
+const PROJECT_MANIFEST = join(process.cwd(), ".clix", "manifest.toml");
 
 function printHelp() {
-  console.log(`agentctl ${VERSION}
+  console.log(`clix ${VERSION}
 
 Manage command-line tools used by agents.
 
 Usage:
-  agentctl <group> <command> [options]
+  clix <group> <command> [options]
 
 Groups:
   cli discover                 Find executable candidates on PATH
@@ -124,7 +124,7 @@ function discover() {
 }
 
 async function writeProjectTool(name, command) {
-  const path = join(process.cwd(), ".agentctl", "manifest.toml");
+  const path = join(process.cwd(), ".clix", "manifest.toml");
   await mkdir(dirname(path), { recursive: true });
   let text = "";
   try {
@@ -174,13 +174,13 @@ async function main() {
     }])), json);
   }
   if (group === "cli" && command === "add") {
-    if (!value) throw new Error("Usage: agentctl cli add <name>");
+    if (!value) throw new Error("Usage: clix cli add <name>");
     const candidates = pathCandidates(value);
     if (!candidates.length) throw new Error(`Executable not found on PATH: ${value}`);
     return output({ name: value, command: candidates[0], manifest: await writeProjectTool(value, candidates[0]) }, json);
   }
   if (group === "repo" && command === "inspect") return output(inspectRepo(value), json);
-  throw new Error(`Unknown command. Run agentctl --help.`);
+  throw new Error(`Unknown command. Run clix --help.`);
 }
 
 main().catch((error) => {

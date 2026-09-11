@@ -1,6 +1,6 @@
-# agentctl
+# clix
 
-`agentctl` is the single CLI package for managing command-line tools used by agents.
+`clix` is the single CLI package for managing command-line tools used by agents.
 
 ## Usage
 
@@ -18,15 +18,15 @@ Install the package globally for local development:
 
 ```bash
 pnpm link --global
-agentctl --help
+clix --help
 ```
 
 ## Configuration
 
 Registered tools are read from two optional TOML files:
 
-- Global: `~/.config/agentctl/manifest.toml`
-- Project: `.agentctl/manifest.toml`
+- Global: `~/.config/clix/manifest.toml`
+- Project: `.clix/manifest.toml`
 
 Project entries override global entries with the same name. A minimal entry is:
 
@@ -40,7 +40,7 @@ risk = "read"
 `cli add` writes a project-local entry after finding the executable on `PATH`:
 
 ```bash
-agentctl cli add gh
+clix cli add gh
 ```
 
 The current implementation never stores credentials in the manifest and does not execute registered tools yet. Execution and update flows will be added only after their argument and confirmation contracts are defined.
