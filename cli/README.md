@@ -4,14 +4,15 @@
 
 ## Usage
 
-Run locally from this repository:
+Run locally from `cli/`:
 
 ```bash
-pnpm start -- --help
-pnpm start -- --json cli discover
-pnpm start -- --json cli list
-pnpm start -- --json cli doctor
-pnpm start -- --json repo inspect .
+pnpm start --help
+pnpm start --json cli discover
+pnpm start --json cli list
+pnpm start --json cli doctor
+pnpm start --json repo inspect .
+pnpm check
 ```
 
 Install the package globally for local development:

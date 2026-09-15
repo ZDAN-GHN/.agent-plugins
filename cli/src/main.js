@@ -56,11 +56,35 @@ function parseArgs(argv) {
   return { json, positional };
 }
 
+function stripTomlComment(rawLine) {
+  let inDoubleQuote = false;
+  let escaped = false;
+
+  for (let index = 0; index < rawLine.length; index += 1) {
+    const character = rawLine[index];
+    if (inDoubleQuote && escaped) {
+      escaped = false;
+      continue;
+    }
+    if (inDoubleQuote && character === "\\") {
+      escaped = true;
+      continue;
+    }
+    if (character === '"') {
+      inDoubleQuote = !inDoubleQuote;
+      continue;
+    }
+    if (!inDoubleQuote && character === "#") return rawLine.slice(0, index);
+  }
+
+  return rawLine;
+}
+
 function parseManifest(text, source) {
   const tools = {};
   let current = null;
   for (const rawLine of text.split(/\r?\n/)) {
-    const line = rawLine.replace(/#.*/, "").trim();
+    const line = stripTomlComment(rawLine).trim();
     if (!line) continue;
     const section = line.match(/^\[tools\.([A-Za-z0-9_-]+)\]$/);
     if (section) {
