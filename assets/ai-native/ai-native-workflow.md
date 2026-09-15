@@ -97,6 +97,29 @@ sanitized: never include credentials, tokens, private keys, cookies, production
 data, customer data, or full sensitive logs. Link to approved secure evidence
 where necessary instead of copying it.
 
+## Evolution Feedback
+
+After each delivered, failed, or blocked real task, record the observed success,
+failure, blocker, and maintainer intervention or its absence. Use those records
+to identify repeated friction, not to infer a general rule from one incident.
+
+Classify a justified improvement as exactly one of the following:
+
+- **Project rule** for a repeated decision boundary or safety constraint.
+- **Project script or CLI wrapper** for a repeated deterministic operation with
+  stable inputs, safe permission boundary, and independently verifiable output.
+- **Skill** for a repeated reasoning or SOP gap with stable inputs and outputs.
+- **SubAgent** for an isolated, independently verifiable work package that
+  benefits from constrained parallel or independent investigation.
+- **Regression sample** for a concrete failure pattern that must remain
+  reproducible or evaluated.
+
+For each candidate, record the supporting task evidence, why the selected form
+fits, and why the other forms do not. Do not promote one-off experience,
+unverified assumptions, sensitive data, or machine-specific details into a
+long-term asset. No candidate changes long-term governance automatically; a
+maintainer approves any persistent rule, capability, or permission change.
+
 ## Capability Boundaries
 
 The main Agent orchestrates this protocol. Use project commands or small CLI
