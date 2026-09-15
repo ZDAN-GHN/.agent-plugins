@@ -5,9 +5,9 @@ import process from 'node:process';
 const root = resolve(import.meta.dirname, '..');
 const files = {
   entry: 'AGENTS.md',
-  protocol: 'assets/ai-native/validation-execution.md',
-  template: 'assets/ai-native/task-record-template.md',
-  cases: 'assets/ai-native/validation-execution-cases.json',
+  protocol: 'assets/ai-native-sop/validation-execution.md',
+  template: 'assets/ai-native-sop/task-record-template.md',
+  cases: 'assets/ai-native-sop/validation-execution-cases.json',
 };
 
 const required = {

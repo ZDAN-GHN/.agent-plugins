@@ -5,8 +5,8 @@ import process from 'node:process';
 const root = resolve(import.meta.dirname, '..');
 const files = {
   entry: 'AGENTS.md',
-  protocol: 'assets/ai-native/ai-native-workflow.md',
-  template: 'assets/ai-native/task-record-template.md',
+  protocol: 'assets/ai-native-sop/ai-native-workflow.md',
+  template: 'assets/ai-native-sop/task-record-template.md',
 };
 
 const requirements = {

@@ -5,10 +5,10 @@ import process from 'node:process';
 const root = resolve(import.meta.dirname, '..');
 const files = {
   entry: 'AGENTS.md',
-  workflow: 'assets/ai-native/ai-native-workflow.md',
-  protocol: 'assets/ai-native/change-review.md',
-  template: 'assets/ai-native/task-record-template.md',
-  cases: 'assets/ai-native/change-review-cases.json',
+  workflow: 'assets/ai-native-sop/ai-native-workflow.md',
+  protocol: 'assets/ai-native-sop/change-review.md',
+  template: 'assets/ai-native-sop/task-record-template.md',
+  cases: 'assets/ai-native-sop/change-review-cases.json',
 };
 
 const required = {

@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import process from 'node:process';
 
@@ -28,6 +28,7 @@ const requiredSkillText = [
 ];
 
 const missing = [];
+const workflowProtocol = resolve(skillDir, '../../../assets/ai-native-sop/ai-native-workflow.md');
 const skill = await readFile(resolve(skillDir, files.skill), 'utf8');
 const metadata = await readFile(resolve(skillDir, files.metadata), 'utf8');
 const prompts = JSON.parse(await readFile(resolve(skillDir, files.prompts), 'utf8'));
@@ -44,6 +45,12 @@ const requiredMetadataLines = [
   'policy:',
   '  allow_implicit_invocation: true',
 ];
+
+try {
+  await access(workflowProtocol);
+} catch {
+  missing.push(`${files.skill}: missing referenced SOP ${workflowProtocol}`);
+}
 
 const metadataLines = metadata.split(/\r?\n/);
 if (metadata.includes('\t')) {
