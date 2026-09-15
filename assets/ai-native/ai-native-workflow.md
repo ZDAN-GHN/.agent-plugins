@@ -33,8 +33,10 @@ or `fixed` conclusion.
 3. Run the planned validation and record the actual command, exit status, and
    result. Additional relevant validation is allowed when it does not expand
    scope or require an escalation.
-4. Review the resulting diff against the task and validation evidence. Resolve
-   high-priority findings, obtain an explicit maintainer waiver, or escalate.
+4. Review the resulting diff against the task and validation evidence according
+   to `change-review.md`. Resolve P0/P1 findings and rerun affected validation,
+   obtain an explicit maintainer decision, or escalate. Record P2/P3 findings
+   without automatically blocking a low-risk delivery.
 5. Deliver only when all acceptance criteria are met, applicable validation has
    passed, the review conclusion is recorded, and no unresolved escalation
    remains.

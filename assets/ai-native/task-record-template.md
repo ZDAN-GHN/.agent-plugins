@@ -29,10 +29,30 @@ with task-specific facts; use `not applicable` only with a reason.
 - Final status: `delivered` | `fixed` | `failed` | `blocked` | `pending observation` | `mitigated` | `needs observability`
 - Change summary: [What changed; use `none` when blocked before implementation]
 - Actual validation:
-  - `[command or manual step]` - exit/result: [pass, fail, blocked, or inconclusive]
+
+  | Command | Existing entry point | Status | Exit status | Sanitized result / blocker |
+  | --- | --- | --- | --- | --- |
+  | `[exact command]` | `[package script, CI job, Make target, or documented step]` | `passed` | `0` | [Observed result] |
+  | `[exact command]` | `[...]` | `failed` | `[non-zero]` | [Concise failure summary] |
+  | `[not started or attempted command]` | `[...]` | `blocked` | `[not started or observed code]` | [Why execution or a valid result was unavailable] |
 - Incident reproduction evidence: [For stable incidents: before-fix failure and after-fix pass using the same case]
 - Root-cause link: [For incidents: evidence -> root cause -> repair, plus confidence]
-- Review conclusion: [No high-priority findings | findings fixed | waived with maintainer decision | not run because blocked]
+- Review evidence:
+
+  | Required input | Record |
+  | --- | --- |
+  | Task goal / acceptance source | [Issue, request, or approved task record] |
+  | Scoped diff / baseline | `[exact diff command or reviewable change reference]` |
+  | Actual validation evidence | [Links or task-record rows used by the reviewer] |
+  | Review method | [`$code-review`, independent read-only review, or bounded main-Agent review] |
+- Review findings:
+
+  | Severity | Location | Evidence / test gap | Disposition |
+  | --- | --- | --- | --- |
+  | `P0` | [path or `none`] | [...] | [fixed and revalidated | maintainer decision] |
+  | `P1` | [path or `none`] | [...] | [fixed and revalidated | maintainer decision] |
+  | `P2` / `P3` | [path or `none`] | [...] | [recorded for delivery or governance] |
+- Review conclusion: [Clear | P0/P1 fixed and revalidated | P0/P1 maintainer decision recorded | P2/P3 recorded | not run because blocked]
 - Unresolved risks / blockers: [None, or concrete remaining risk and owner]
 - Rollback: [Verified rollback method; update if it changed]
 - Maintainer decisions / waivers: [Links or `none`]

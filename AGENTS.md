@@ -18,6 +18,17 @@ Before closing a GitHub Issue, update its acceptance-criteria checkboxes. Each
 checked item must map one-to-one to verified evidence in the task delivery
 record; leave unmet items unchecked and keep the Issue open.
 
+For validation execution and evidence, follow
+[`assets/ai-native/validation-execution.md`](assets/ai-native/validation-execution.md).
+Reuse declared project validation entries and record their actual results; do
+not invent a global runner or report planned work as executed.
+
+For change review, follow
+[`assets/ai-native/change-review.md`](assets/ai-native/change-review.md).
+Provide the task goal, scoped diff, and actual validation evidence; record
+review findings and do not bypass the P0/P1 delivery gate without an explicit
+maintainer decision.
+
 ## Repository Facts
 
 - `cli/` is the repository's only CLI package. Run its checks from that
