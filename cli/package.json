@@ -17,6 +17,7 @@
   "scripts": {
     "start": "node src/main.js",
     "check": "node --check src/main.js",
+    "test": "node tests/parse-manifest.test.mjs",
     "help": "node src/main.js --help"
   },
   "license": "MIT"
