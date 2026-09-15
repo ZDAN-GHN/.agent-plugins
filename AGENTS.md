@@ -14,6 +14,10 @@ Stop and ask the maintainer when the protocol identifies an escalation
 condition. Do not commit, push, merge, deploy, alter permissions, access
 production data, or perform irreversible operations without explicit approval.
 
+Before closing a GitHub Issue, update its acceptance-criteria checkboxes. Each
+checked item must map one-to-one to verified evidence in the task delivery
+record; leave unmet items unchecked and keep the Issue open.
+
 ## Repository Facts
 
 - `cli/` is the repository's only CLI package. Run its checks from that
