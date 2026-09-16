@@ -7,7 +7,7 @@ format, or replacement for tests, lint, type checks, builds, CI, or project
 scripts.
 
 Apply it to both change delivery and incident repair together with
-`ai-native-workflow.md` and the task record template.
+`../task-loops.md` and the task record template.
 
 ## Select Existing Validation Entries
 
@@ -62,7 +62,7 @@ If a command starts but environmental conditions make its result invalid for the
 criterion, classify it as `blocked` and retain the observed code with the
 reason.
 
-For a reproducible incident, follow the workflow protocol: the same case must
+For a reproducible incident, follow the task-loop protocol: the same case must
 fail before the repair and pass afterward before the incident can be `fixed`.
 
 ## Protect Validation Evidence

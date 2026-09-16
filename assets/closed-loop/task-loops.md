@@ -1,4 +1,4 @@
-# AI Native Workflow Protocol
+# Closed-Loop Task Protocol
 
 This protocol governs two task-level loops: change delivery and incident
 repair. It is a shared operating rule for the main Agent, not a workflow
@@ -34,7 +34,7 @@ or `fixed` conclusion.
    result. Additional relevant validation is allowed when it does not expand
    scope or require an escalation.
 4. Review the resulting diff against the task and validation evidence according
-   to `change-review.md`. Resolve P0/P1 findings and rerun affected validation,
+   to `protocols/change-review.md`. Resolve P0/P1 findings and rerun affected validation,
    obtain an explicit maintainer decision, or escalate. Record P2/P3 findings
    without automatically blocking a low-risk delivery.
 5. Deliver only when all acceptance criteria are met, applicable validation has

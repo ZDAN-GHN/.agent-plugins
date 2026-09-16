@@ -5,16 +5,16 @@ import process from 'node:process';
 const root = resolve(import.meta.dirname, '..');
 const files = {
   entry: 'AGENTS.md',
-  workflow: 'assets/ai-native-sop/ai-native-workflow.md',
-  protocol: 'assets/ai-native-sop/change-review.md',
-  template: 'assets/ai-native-sop/task-record-template.md',
-  cases: 'assets/ai-native-sop/change-review-cases.json',
+  workflow: 'assets/closed-loop/task-loops.md',
+  protocol: 'assets/closed-loop/protocols/change-review.md',
+  template: 'assets/closed-loop/protocols/task-record-template.md',
+  cases: 'assets/closed-loop/cases/change-review-cases.json',
 };
 
 const required = {
   entry: [files.protocol, 'task goal, scoped diff, and actual validation evidence'],
   workflow: [
-    'according\n   to `change-review.md`',
+    'according\n   to `protocols/change-review.md`',
     'Resolve P0/P1 findings and rerun affected validation',
     'Record P2/P3 findings\n   without automatically blocking a low-risk delivery.',
   ],
@@ -74,9 +74,9 @@ if (!Array.isArray(cases) || cases.length < requiredKinds.size) {
 }
 
 if (missing.length > 0) {
-  console.error('AI Native change review contract failed:');
+  console.error('Change review contract failed:');
   for (const item of missing) console.error(`- ${item}`);
   process.exitCode = 1;
 } else {
-  console.log('AI Native change review contract passed.');
+  console.log('Change review contract passed.');
 }

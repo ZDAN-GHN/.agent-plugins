@@ -5,9 +5,9 @@ import process from 'node:process';
 const root = resolve(import.meta.dirname, '..');
 const files = {
   entry: 'AGENTS.md',
-  protocol: 'assets/ai-native-sop/validation-execution.md',
-  template: 'assets/ai-native-sop/task-record-template.md',
-  cases: 'assets/ai-native-sop/validation-execution-cases.json',
+  protocol: 'assets/closed-loop/protocols/validation-execution.md',
+  template: 'assets/closed-loop/protocols/task-record-template.md',
+  cases: 'assets/closed-loop/cases/validation-execution-cases.json',
 };
 
 const required = {
@@ -65,9 +65,9 @@ if (!Array.isArray(cases) || cases.length < requiredKinds.size) {
 }
 
 if (missing.length > 0) {
-  console.error('AI Native validation execution contract failed:');
+  console.error('Validation execution contract failed:');
   for (const item of missing) console.error(`- ${item}`);
   process.exitCode = 1;
 } else {
-  console.log('AI Native validation execution contract passed.');
+  console.log('Validation execution contract passed.');
 }

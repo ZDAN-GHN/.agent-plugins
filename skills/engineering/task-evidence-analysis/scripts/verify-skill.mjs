@@ -28,7 +28,7 @@ const requiredSkillText = [
 ];
 
 const missing = [];
-const workflowProtocol = resolve(skillDir, '../../../assets/ai-native-sop/ai-native-workflow.md');
+const taskLoopProtocol = resolve(skillDir, 'assets/task-loops.md');
 const skill = await readFile(resolve(skillDir, files.skill), 'utf8');
 const metadata = await readFile(resolve(skillDir, files.metadata), 'utf8');
 const prompts = JSON.parse(await readFile(resolve(skillDir, files.prompts), 'utf8'));
@@ -47,9 +47,9 @@ const requiredMetadataLines = [
 ];
 
 try {
-  await access(workflowProtocol);
+  await access(taskLoopProtocol);
 } catch {
-  missing.push(`${files.skill}: missing referenced SOP ${workflowProtocol}`);
+  missing.push(`${files.skill}: missing referenced closed-loop protocol ${taskLoopProtocol}`);
 }
 
 const metadataLines = metadata.split(/\r?\n/);

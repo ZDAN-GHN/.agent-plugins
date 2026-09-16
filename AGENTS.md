@@ -3,9 +3,9 @@
 ## AI Native Task Protocol
 
 For every task that changes repository content, follow
-[`assets/ai-native-sop/ai-native-workflow.md`](assets/ai-native-sop/ai-native-workflow.md).
+[`assets/closed-loop/task-loops.md`](assets/closed-loop/task-loops.md).
 Before the first write, create a task record from
-[`assets/ai-native-sop/task-record-template.md`](assets/ai-native-sop/task-record-template.md)
+[`assets/closed-loop/protocols/task-record-template.md`](assets/closed-loop/protocols/task-record-template.md)
 in the task's durable context (for example, its GitHub Issue or a linked
 document). Do not mark the task complete until its delivery record is filled
 with actual validation and review results.
@@ -19,12 +19,12 @@ checked item must map one-to-one to verified evidence in the task delivery
 record; leave unmet items unchecked and keep the Issue open.
 
 For validation execution and evidence, follow
-[`assets/ai-native-sop/validation-execution.md`](assets/ai-native-sop/validation-execution.md).
+[`assets/closed-loop/protocols/validation-execution.md`](assets/closed-loop/protocols/validation-execution.md).
 Reuse declared project validation entries and record their actual results; do
 not invent a global runner or report planned work as executed.
 
 For change review, follow
-[`assets/ai-native-sop/change-review.md`](assets/ai-native-sop/change-review.md).
+[`assets/closed-loop/protocols/change-review.md`](assets/closed-loop/protocols/change-review.md).
 Provide the task goal, scoped diff, and actual validation evidence; record
 review findings and do not bypass the P0/P1 delivery gate without an explicit
 maintainer decision.

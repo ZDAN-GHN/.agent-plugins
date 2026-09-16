@@ -5,8 +5,8 @@ import process from 'node:process';
 const root = resolve(import.meta.dirname, '..');
 const files = {
   entry: 'AGENTS.md',
-  protocol: 'assets/ai-native-sop/ai-native-workflow.md',
-  template: 'assets/ai-native-sop/task-record-template.md',
+  protocol: 'assets/closed-loop/task-loops.md',
+  template: 'assets/closed-loop/protocols/task-record-template.md',
 };
 
 const requirements = {
@@ -59,9 +59,9 @@ const missing = contents.flatMap(([name, content]) =>
 );
 
 if (missing.length > 0) {
-  console.error('AI Native workflow documentation contract failed:');
+  console.error('Task-loop documentation contract failed:');
   for (const item of missing) console.error(`- ${item}`);
   process.exitCode = 1;
 } else {
-  console.log('AI Native workflow documentation contract passed.');
+  console.log('Task-loop documentation contract passed.');
 }

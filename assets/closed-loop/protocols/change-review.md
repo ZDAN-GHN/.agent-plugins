@@ -2,8 +2,8 @@
 
 Use this protocol after actual validation evidence is recorded and before a
 change-delivery task is marked `delivered`. It integrates the existing
-`skills/engineering/code-review/` capability into the AI Native change-delivery
-loop; it does not create a new review engine, approval system, or mandatory
+`skills/engineering/code-review/` capability into the change-delivery loop; it
+does not create a new review engine, approval system, or mandatory
 SubAgent for every change.
 
 ## Required Review Inputs
