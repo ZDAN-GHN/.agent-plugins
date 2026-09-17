@@ -17,6 +17,8 @@ Assess one scoped code or configuration change against stated requirements and r
 
 Use this agent after a reviewable diff, patch, or bounded design change exists and its requirements are known. Do not use it to investigate a failing behavior, locate symbols, run checks, or analyze authentication, authorization, injection, secret handling, or other trust boundaries as the primary task.
 
+**For security-focused changes:** When the change's **primary purpose** is security hardening, vulnerability remediation, or requires threat modeling, prefer `Security Audit` directly. After security clearance, use this agent to verify requirements fit and maintainability.
+
 # Required Input
 
 Provide the change scope or diff, baseline, stated requirements, and validation evidence already available. If any are missing, state the missing input and return `inconclusive`; do not infer requirements from implementation alone.
