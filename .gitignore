@@ -1,3 +1,5 @@
 .npm-cache/
 .pi/*
 !.pi/agents/
+tmp/
+skills-lock.json
