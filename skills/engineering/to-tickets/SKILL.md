@@ -1,109 +1,207 @@
 ---
 name: to-tickets
-description: Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker (edges as text in one file per ticket locally, or native blocking links on a real tracker).
+description: 将计划、规格或当前对话分解为中文工程 Ticket Graph。每个 Ticket 记录工程边界、真实阻塞依赖、拆解性质和所需能力，供下游 Orchestrator 再拆为可服务子问题并调度 capability-bound Subagent。
 disable-model-invocation: true
+metadata:
+  upstream: mattpocock/skills@v1.1.0
+  upstream-skill-sha256: 918bdefab9313100cb1f7ccb412e2a773fe2f2801dd20d44f6b2acf7a42ca456
+  customization: pi-capability-orchestrator
 ---
 
 # To Tickets
 
-Break a plan, spec, or conversation into a set of **tickets**: tracer-bullet vertical slices, each declaring the tickets that **block** it.
+将计划、规格或当前对话分解为一组 **Ticket**，并建立声明真实阻塞边的 **Ticket Graph**。
 
-## Initialization self-check
+本 Skill 的职责是工程问题分解，不是 Agent 调度。Ticket 表示可审查、可管理的工程工作边界；它不默认等于一次 Subagent 执行。
 
-Before gathering context or drafting tickets, read `docs/agents/issue-tracker.md` and `docs/agents/triage-labels.md` when they exist. If either tracker setup file is missing, read [`assets/issue-tracker/SETUP.md`](assets/issue-tracker/SETUP.md) and execute its setup flow immediately. The setup flow may ask only the minimum tracker or label-mapping question needed to publish safely. Reread the resulting files before continuing; do not tell the user to invoke a removed setup skill.
+## 初始化自检
 
-Use the selected backend's detailed reference (`assets/issue-tracker/issue-tracker-github.md`, `issue-tracker-gitlab.md`, or `issue-tracker-local.md`) whenever the repository configuration points to that backend or an operation is unclear.
+在收集上下文或起草 Ticket 前：
 
-## Process
+1. 若存在，读取 `docs/agents/issue-tracker.md` 与 `docs/agents/triage-labels.md`。
+2. 若任一 tracker 设置文件缺失，读取 [`assets/issue-tracker/SETUP.md`](assets/issue-tracker/SETUP.md)，只执行其为安全发布所需的最小设置流程；完成后重新读取生成的设置文件。
+3. 当 repository 设置指向某个 backend 或操作含义不明确时，读取对应详细参考：`assets/issue-tracker/issue-tracker-github.md`、`issue-tracker-gitlab.md` 或 `issue-tracker-local.md`。
 
-### 1. Gather context
+不得猜测 tracker、标签映射或权限。不要关闭或修改父 Issue。
 
-Work from whatever is already in the conversation context. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it and read its full body and comments.
+## 核心边界
 
-### 2. Explore the codebase (optional)
+### Ticket、Subproblem 与 Agent Run
 
-If you have not already explored the codebase, do so to understand the current state of the code. Ticket titles and descriptions should use the project's domain glossary vocabulary, and respect ADRs in the area you're touching.
+```text
+Ticket
+  └── Orchestrator 可在需要时拆分为一个或多个 serviceable subproblems
+        └── 按所需 capability 调度一次或多次 Subagent run
+```
 
-Look for opportunities to prefactor the code to make the implementation easier. "Make the change easy, then make the easy change."
+三者不是同一层级：
 
-### 3. Draft vertical slices
+| 概念 | 回答的问题 | 本 Skill 的职责 |
+| --- | --- | --- |
+| Ticket | `What engineering problem needs to be solved?` | 创建和发布 |
+| Subproblem | `What bounded piece of work can be serviced independently?` | 不创建；由 Orchestrator 在执行前或执行中决定 |
+| Agent Run | `Which capability should perform this subproblem now?` | 不选择具体 Agent 或运行 |
 
-Break the work into **tracer bullet** tickets.
+### Ticket Graph 与 Execution Graph
 
-<vertical-slice-rules>
+| 图 | 回答的问题 | 归属 |
+| --- | --- | --- |
+| Ticket Graph | `What needs to happen?`、`What depends on what?` | `to-tickets` |
+| Execution Graph | `Which subproblems?`、`Which capability?`、`Parallel or sequential?` | 下游 Orchestrator |
 
-- Each slice cuts a narrow but COMPLETE path through every layer (schema, API, UI, tests): vertical, NOT a horizontal slice of one layer
-- A completed slice is demoable or verifiable on its own
-- Each slice is sized to fit in a single fresh context window
-- Any prefactoring should be done first
+`Blocked by` 只表达工程问题之间的真实依赖，不表达文件重叠、个人偏好、Agent 可用性或临时调度顺序。
 
-</vertical-slice-rules>
+### Capability requirement
 
-Give each ticket its **blocking edges**: the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
+每张 Ticket 记录完成该工程问题已知需要的最小 capability，例如 `explore`、`research`、`implement`、`verify`。它不是 persona、岗位名称或具体 Subagent 指派。不要创建或引用 `Researcher Agent`、`Developer Agent`、`Reviewer Agent`、`Architect Agent` 等角色模型。
 
-**Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket; green is promised only there.
+## 输出语言
 
-### 4. Quiz the user
+面向审查者的自然语言默认使用中文，包括 Ticket 标题、目标、上下文、范围、约束、验收标准、依赖、拆解说明、备注和执行边界。
 
-Present the proposed breakdown as a numbered list. For each ticket, show:
+- 原始上下文为英文时，将解释性内容转为中文，而非原样复制英文。
+- `Blocked by` 中的 Ticket 引用保留其原始 Ticket 标题。
+- `Required capabilities` 使用机器可识别的 capability 标识，例如 `explore`、`research`、`implement`、`verify`。
+- `Decomposition` 只使用英文枚举：`direct`、`decomposable`、`investigative`、`architectural`、`wide-refactor`。
+- 代码、API、类名、函数名、变量名、文件路径、命令、配置项、协议名和必要技术术语保留原始英文。
 
-- **Title**: short descriptive name
-- **Blocked by**: which other tickets (if any) must complete first
-- **What it delivers**: the end-to-end behaviour this ticket makes work
+## 流程
 
-Ask the user:
+### 1. 收集上下文
 
-- Does the granularity feel right? (too coarse / too fine)
-- Are the blocking edges correct: does each ticket only depend on tickets that genuinely gate it?
-- Should any tickets be merged or split further?
+使用当前对话中已提供的上下文。若用户提供规格路径、Issue 编号或 URL，读取其完整正文与评论。区分已确认事实、待决策项和假设；不要把假设写成 Ticket 事实。
 
-Iterate until the user approves the breakdown.
+### 2. 探索代码库（按需）
 
-### 5. Publish the tickets to the configured tracker
+若尚未探索代码库，先理解当前实现、项目领域词汇、相关 ADR、接口约束和既有验证入口。寻找可先行完成的 prefactor：先让改动变容易，再完成改动。
 
-Publish the approved tickets. **How** depends on the tracker declared in `docs/agents/issue-tracker.md`; the tickets are the same either way, only the shape of the blocking edges changes:
+### 3. 识别工程边界
 
-- **Local files** → write one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below: one ticket per file, never a single combined file.
-- **A real issue tracker (GitHub, Linear, …)** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking / sub-issue relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. Apply the `ready-for-agent` triage label unless instructed otherwise; the tickets are agent-grabbable by construction.
+将工作划分为目标、上下文、范围、约束、依赖和完成条件都清楚的工程问题。
 
-Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
+优先使用可验证的 **vertical slice**：当一条窄的端到端路径能独立交付、验证且不掩盖未决问题时，它通常是合适的 Ticket 边界。
 
-Do NOT close or modify any parent issue.
+vertical slice 是推荐原则，不是硬规则。以下类型可以是稳定、合理但非完整 vertical slice 的 Ticket：
 
-<local-ticket-template>
+- 探索或研究任务；
+- 架构决策；
+- 分阶段迁移；
+- 复杂重构；
+- 纯基础设施工作；
+- 必须先解决设计问题才能继续的工作。
 
-# <NN>: <Ticket title>
+不要为了让单个 Subagent 容易执行而过度切碎工程问题。目标是最小化复杂度并保持工程边界稳定，不是让每张 Ticket 都跨越所有技术层。
 
-**What to build:** the end-to-end behaviour this ticket makes work, from the user's perspective, not a layer-by-layer implementation list.
+### 4. 建立 Ticket Graph
 
-**Blocked by:** the numbers/titles of the tickets that gate this one, or "None (can start immediately)".
+为每张 Ticket 添加真实的 `Blocked by` 边。无阻塞的 Ticket 可以进入发布后的编排队列，但不隐含立即执行。
 
-**Status:** ready-for-agent
+对每张 Ticket 选择一个 `Decomposition` 值，并简要说明已知考虑：
 
-- [ ] Acceptance criterion 1
-- [ ] Acceptance criterion 2
+| 值 | 含义 |
+| --- | --- |
+| `direct` | 通常可直接形成一个有界执行单元。 |
+| `decomposable` | 工程边界合理，但通常应由 Orchestrator 再拆为多个 serviceable subproblems。 |
+| `investigative` | 需要先探索或研究，之后才能决定实现路径。 |
+| `architectural` | 存在尚未解决的架构设计决策。 |
+| `wide-refactor` | 需要分阶段迁移，不能把一次大范围机械改动伪装成一个可独立落地的 slice。 |
 
-</local-ticket-template>
+**wide-refactor 仍采用 expand-contract。** 先 `expand`，让新旧形式并存；再按 blast radius 分批 `migrate`；最后在没有调用方后 `contract` 删除旧形式。每批迁移都应有可管理的边界，并由 `Blocked by` 表示真实前置。若批次无法独立保持绿色，仍保留顺序，但让它们共同阻塞最终的集成和验证 Ticket；只有最终集成节点承诺整体绿色。
 
-<issue-template>
+### 5. 标识所需能力
 
-## Parent
+为每张 Ticket 填写 `Required capabilities`。只列已知必要能力，不把 capability 转换为角色、具体插件、模型或调度决定。
 
-A reference to the parent issue on the tracker (if the source was an existing issue, otherwise omit this section).
+能力只是对下游的需求信号。例如，`investigative` Ticket 可能需要 `explore`、`research`；实现后需要独立证据的 Ticket 可能需要 `verify`。Orchestrator 仍可依据实际 Subproblem、运行上下文和可用能力决定如何派发。
 
-## What to build
+### 6. 审查 Ticket Graph
 
-The end-to-end behaviour this ticket makes work, from the user's perspective, not layer-by-layer implementation.
+以编号清单展示拟议 Ticket，并至少展示标题、`Blocked by`、`Decomposition`、`Required capabilities` 与其工程边界摘要。向用户确认：
 
-## Acceptance criteria
+- Ticket 的工程边界是否清晰稳定，粒度是否过粗或过细；
+- `Blocked by` 是否只包含真正阻塞的依赖；
+- 是否应合并、拆分或先新增调查/架构决策 Ticket；
+- `Decomposition` 与 capability requirement 是否符合预期；
+- 是否需要调整范围、约束或验收标准。
 
-- [ ] Criterion 1
-- [ ] Criterion 2
+在用户批准前不要发布。批准代表 Ticket Graph 已就绪，可供下游 Orchestrator 决定是否进一步分解。
+
+### 7. 发布 Ticket
+
+发布已批准的 Ticket，先发布 blockers，以便后续 Ticket 使用真实标识引用依赖。发布只记录问题边界和依赖图；不创建 Subproblem、不指派具体 Subagent、不选择模型、不执行工作。
+
+根据 `docs/agents/issue-tracker.md` 声明的 tracker 发布：
+
+- **Local files**：在 `.scratch/<feature-slug>/issues/` 下按依赖顺序写一票一文件，命名为 `<NN>-<slug>.md`。每份文件只包含一张 Ticket，`Blocked by` 使用本地编号/标题。
+- **真实 Issue tracker**：按依赖顺序一票一 Issue。优先使用平台原生 blocker 或 sub-issue 关系；没有原生关系时，在 `Blocked by` 中引用阻塞 Issue。
+
+如 tracker 有已配置的“已批准、待分解”工作流标签或状态，使用其实际映射；不要自动套用角色型或“已分配给 Agent”的标签。没有此映射时，保留未分派状态，由 Orchestrator 接管。
+
+不要包含容易过期的具体文件路径或代码片段。唯一例外是原型已经产生了比文字更精确的决策形状，例如 state machine、reducer、schema 或 type shape；此时只内联决策所需的最小部分，并注明来源。
+
+### 8. 下游接口
+
+发布后的契约如下；这是流程说明，不是 Orchestrator 实现要求：
+
+```text
+approved Ticket Graph
+  -> Orchestrator determines whether decomposition is needed
+  -> one or more serviceable subproblems
+  -> capability matching
+  -> capability-bound Subagent dispatch
+  -> integration and verification
+```
+
+## Ticket 模板
+
+本地文件和真实 Issue 使用相同字段；tracker 只改变标识和依赖链接的表现形式。
+
+```markdown
+# <中文 Ticket 标题>
+
+## 目标（Goal）
+
+该 Ticket 需要解决的具体工程问题，以及最终希望达到的结果。
+
+## 上下文（Context）
+
+理解问题所必需的项目背景、现有实现、相关架构信息和前置事实。
+
+## 范围（Scope）
+
+包含的工作范围，以及明确不应在本 Ticket 中扩大的范围。
+
+## 约束（Constraints）
+
+必须遵守的架构、兼容性、技术栈、项目规范或其他限制。
+
+## 验收标准（Acceptance Criteria）
+
+- [ ] 明确、可检查的完成条件
+- [ ] 明确、可检查的完成条件
 
 ## Blocked by
 
-- A reference to each blocking ticket, or "None (can start immediately)".
+- <Ticket 标题>
+- 无
 
-</issue-template>
+## Decomposition
 
-In either form, avoid specific file paths or code snippets: they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
+`direct` | `decomposable` | `investigative` | `architectural` | `wide-refactor`
+
+说明该 Ticket 是否预计需要由 Orchestrator 进一步拆解，以及已知的拆解考虑。
+
+## Required capabilities
+
+- `explore`
+
+## 备注（Notes）
+
+实现、集成、依赖或风险方面的重要说明。
+
+## 执行边界（Execution Boundary）
+
+该 Ticket 定义的是工程问题边界，而不是默认的单次 Agent 执行边界。下游 Orchestrator 可以根据该 Ticket 的复杂度、依赖关系和当前执行上下文，将其进一步拆分为一个或多个可服务子问题，再按对应 capability 调度 Subagent。
+```
+
+发布的 Ticket 必须保留 `Acceptance Criteria`、`Blocked by`、`Decomposition` 和 `Required capabilities`。任何实现、集成或验证细节都必须落在清晰的工程边界内，而不是借由未来的 Agent 调度隐式补全。

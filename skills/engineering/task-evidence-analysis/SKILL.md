@@ -8,7 +8,7 @@ description: Analyze a change request or incident before implementation by produ
 Use this Skill before implementing a change or repairing an incident when the
 Agent needs to determine what the repository actually supports. Its output is
 an evidence-backed analysis for either the change-delivery or incident-repair
-loop in `assets/task-loops.md`.
+loop in [task-loops.md](assets/task-loops.md).
 
 Do not use this Skill as a substitute for implementation, validation execution,
 change review, or a root-cause declaration. It gathers and assesses evidence;
