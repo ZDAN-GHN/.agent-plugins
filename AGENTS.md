@@ -2,13 +2,14 @@
 
 ## AI Native Task Protocol
 
-For every task that changes repository content, follow
-[`assets/closed-loop/task-loops.md`](assets/closed-loop/task-loops.md).
-Before the first write, create a task record from
-[`assets/closed-loop/protocols/task-record-template.md`](assets/closed-loop/protocols/task-record-template.md)
-in the task's durable context (for example, its GitHub Issue or a linked
-document). Do not mark the task complete until its delivery record is filled
-with actual validation and review results.
+For standard tasks that change repository content, follow
+[`assets/closed-loop/task-loops.md`](assets/closed-loop/task-loops.md) and create
+the full task record required by that protocol before the first write. Eligible
+low-risk tasks may use the protocol's lightweight path; an obvious single-file
+documentation correction may omit a standalone task record. Do not mark a
+standard task complete until its delivery record is filled with actual
+validation and review results, or a low-risk task complete until its required
+lightweight delivery evidence is recorded.
 
 Stop and ask the maintainer when the protocol identifies an escalation
 condition. Do not commit, push, merge, deploy, alter permissions, access

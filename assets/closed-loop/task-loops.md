@@ -9,10 +9,37 @@ SubAgent for each stage.
 commands, CI configuration, tests, and existing repository rules remain the
 source of truth for implementation and validation.
 
+## Low-Risk Change Exception
+
+A task may use the lightweight path only when all of the following are true:
+
+- It changes exactly one existing repository file.
+- It has no executable behavior, public interface, dependency, permission,
+  security, privacy, data-integrity, deployment, or external-system impact.
+- It is either a pure documentation change, an obvious typo/whitespace/format
+  correction, or another small non-behavioral change whose intent and rollback
+  are unambiguous.
+- It does not modify governance or protocol files, `AGENTS.md`, security or
+  permission rules, task records, or other files whose purpose is to define
+  agent behavior or repository controls.
+
+For an eligible lightweight task, no full task-record template or standalone
+handoff document is required. Before writing, retain a concise note in the
+request or durable change context covering the target, acceptance check,
+validation, risk, and rollback. At delivery, record the actual changed path,
+validation result, review conclusion, and rollback in that same lightweight
+context. A single-file existing-document typo, whitespace, or formatting fix
+may omit even the separate note, but must still pass a focused diff/manual
+check and report the result and rollback at delivery.
+
+If any condition is uncertain, the scope expands beyond one file, or the
+change touches a governance, security, permission, interface, dependency,
+data, or runtime boundary, use the full task record and delivery loop.
+
 ## Shared Entry Conditions
 
-Before the first repository write, the task record must state all of the
-following:
+For a standard task, before the first repository write the task record must
+state all of the following:
 
 1. Target and concrete input or source.
 2. Non-goals and affected scope.
@@ -84,11 +111,13 @@ it does not convert failed or absent validation into a passing result.
 
 ## Shared Delivery Conditions
 
-Every task ends with a delivery record containing the changed scope, actual
-validation evidence, review conclusion, unresolved risks or blockers, and a
-rollback method. The task status must be one of `delivered`, `fixed`, `failed`,
-`blocked`, `pending observation`, `mitigated`, or `needs observability`, and
-must match the recorded evidence.
+A standard task ends with a delivery record containing the changed scope,
+actual validation evidence, review conclusion, unresolved risks or blockers,
+and a rollback method. An eligible lightweight task ends with the concise
+lightweight evidence described above; an obvious typo/whitespace/formatting
+correction may use only its focused validation and delivery summary. The task
+status must match the recorded evidence: `delivered`, `fixed`, `failed`,
+`blocked`, `pending observation`, `mitigated`, or `needs observability`.
 
 Task records may live in the authoritative GitHub Issue, its linked change
 record, or another durable task artifact. Do not create a central registry or

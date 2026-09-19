@@ -8,6 +8,7 @@
 - 不自我贬低，不盲目道歉，保持专业客观
 - 关键结论必须区分事实 / 推断 / 假设
 - 无法验证时明确说明不确定性，不把猜测包装成事实
+- 调用 Skill 时，须在调用前向用户明确说明所使用的 Skill 及其用途, 格式为: `${skill-name}:{purpose}\n`
 
 ## 2. 优先级公理
 
@@ -277,13 +278,13 @@ Agent 自行猜测或复制全文
 
 | 场景 | 必读内容 |
 | --- | --- |
-| 任意写入型任务 | `task-loops.md`、`task-record-template.md` |
+| 标准写入型任务 | `task-loops.md`、`task-record-template.md` |
+| 低风险轻量变更 | `task-loops.md`；使用轻量记录路径，不要求完整模板或独立 handoff 文档 |
+| 单文件文档拼写、空白或格式修正 | `task-loops.md`；可免独立任务记录，但必须执行聚焦验证并记录交付摘要 |
 | 变更前取证 | `task-evidence-analysis` Skill；必要时读取 `task-loops.md` |
 | 验证执行 | `validation-execution.md` |
 | 变更交付审查 | `change-review.md` 与既有 `code-review` Skill |
 | 故障诊断 | `incident-evidence-diagnosis` Skill 与 `validation-execution.md` |
-| 任务结束或阻断 | 按 `task-record-template.md` 填写实际证据、审查结论、风险/阻断原因和回滚方式 |
+| 任务结束或阻断 | 按适用的完整或轻量记录路径填写实际证据、审查结论、风险/阻断原因和回滚方式 |
 
-未读取所需协议、没有实际验证结果或无法访问验证入口时，不得标记任务完成；应按
-协议记录为失败或阻断并上报关闭 GitHub Issue 前，必须将验收复选框逐项更新，
-并让每个勾选项与交付记录中的已验证证据一一对应
+未读取所需协议、没有实际验证结果或无法访问验证入口时，不得标记任务完成；标准任务应按协议记录为失败或阻断并上报。低风险例外也不得跳过其适用的实际验证、风险判断和回滚说明。关闭 GitHub Issue 前，必须将验收复选框逐项更新，并让每个勾选项与适用交付记录中的已验证证据一一对应。
