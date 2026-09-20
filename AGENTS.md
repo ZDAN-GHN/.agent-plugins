@@ -37,3 +37,7 @@ maintainer decision.
 - Existing Skills live under `skills/`; preserve each Skill's local conventions
   and validate only the changed scope unless a broader regression is relevant.
 - Do not read or modify `.mimosa/` unless the task explicitly requires it.
+
+## Hooks
+
+- After creating or updating a skill, run `/skill-quality-auditor` to check whether it needs further improvement.
