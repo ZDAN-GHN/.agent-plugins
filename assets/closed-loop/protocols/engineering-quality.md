@@ -6,6 +6,10 @@ a material cross-module flow. Read it with the task record before implementation
 and use [`validation-execution.md`](validation-execution.md) and
 [`change-review.md`](change-review.md) before delivery.
 
+Engineering quality means choosing the appropriate boundary, abstraction,
+lifecycle, and complexity for the actual business meaning and system
+constraints—not maximizing abstraction or implementation completeness.
+
 This is a proportional design check, not a universal architecture exercise or a
 required design document. Identify and handle only constraints the change can
 actually affect. A small, isolated, low-risk change may need only a short
@@ -30,8 +34,9 @@ For a material design choice, be able to explain its basis in a concrete
 constraint: business semantics, lifecycle, architecture boundary, consistency,
 compatibility, caller behavior, failure model, rollback, or observability. Keep
 that evidence in the task record only when the decision or risk is material.
-"It changes fewer lines", "it is easiest to test", or "it is familiar" may be
-useful factors, but are not sufficient primary reasons by themselves.
+"It changes fewer lines", "it is easiest to test", "the repository did it
+before", or "it is familiar" may be useful factors, but are not sufficient
+primary reasons by themselves.
 
 ## Stable Patterns, Not Pattern Copying
 
@@ -67,17 +72,23 @@ For the task's actual risk, decide which of these constraints apply and why:
   release or rollback order;
 - auditability, diagnostics, correlation, metrics, logs, and business events.
 
-This scan identifies applicable risks; it does not require a written answer,
-design artifact, or implementation for every item. Record material decisions and
-unresolved risks in the task record. A constraint that is not applicable needs
-no artificial implementation.
+Use the categories as an internal judgment framework to detect relevant risks, not
+as an output checklist to enumerate every category, output N/A, or produce a
+design artifact for each one. A clearly inapplicable constraint needs no
+analysis, implementation, or extra documentation. Record material decisions and
+unresolved risks in the task record.
 
 ## Data Lifecycle
 
-For deletion, replacement, cleanup, archival, update, or deduplication of
-business data, first choose the lifecycle strategy that matches the business
-meaning: physical deletion, logical deletion, archival, versioning, merge, or
+For deletion, replacement, cleanup, archival, an update that may change
+historical business facts, or deduplication of business data, first choose the
+lifecycle strategy that matches the business meaning before selecting a database
+operation: physical deletion, logical deletion, archival, versioning, merge, or
 another explicit policy.
+
+When Schema or persistent-state design affects lifecycle, historical facts, or
+traceability, assess those constraints before committing the representation; this
+does not require a separate design artifact.
 
 Do not treat a delete request as default authorization for physical deletion;
 do not mandate logical deletion either. Determine the need for recovery,
@@ -93,12 +104,12 @@ or callers, assess old data and clients, historical states, migration and
 rollout order, safe rollback, and incremental deployment. Current code running
 locally is not compatibility evidence.
 
-Model real failure modes for the change: absent or invalid values, duplicate or
-retried requests, timeout, concurrent work, interrupted or partial execution,
-external failure, invalid state transitions, and inconsistent data. Preserve
-invariants with the existing transaction, concurrency, retry, or error-handling
-patterns where they fit. Do not add generic defensive branches only to satisfy
-a checklist.
+Handle only real or reasonably evidenced failure modes for the change: absent
+or invalid values, duplicate or retried requests, timeout, concurrent work,
+interrupted or partial execution, external failure, invalid state transitions,
+and inconsistent data. Protect the real invariants with the existing transaction,
+concurrency, retry, or error-handling patterns where they fit. Do not add generic
+defensive branches merely to appear robust or to satisfy a checklist.
 
 ## Maintainable Boundaries
 
@@ -106,7 +117,9 @@ Passing acceptance checks does not by itself make an implementation acceptable.
 Confirm that the change:
 
 - follows repository architecture and conventions and keeps ownership clear;
-- expresses material business behavior at the appropriate abstraction level;
+- keeps material business rules at a boundary that expresses their meaning,
+  rather than scattering them across controllers, repositories, SQL, or local
+  technical conditionals;
 - avoids needless special cases, duplicated policy, hidden mutable state, and
   incidental coupling;
 - adds an abstraction only when it removes real complexity or matches an

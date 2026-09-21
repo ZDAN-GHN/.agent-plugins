@@ -20,7 +20,7 @@
 | 标准变更、低风险例外、事故状态或任务记录 | [`task-loops.md`](../assets/closed-loop/task-loops.md)、[`task-record-template.md`](../assets/closed-loop/protocols/task-record-template.md) |
 | 变更前取证 | `task-evidence-analysis` Skill |
 | 事故诊断 | `incident-evidence-diagnosis` Skill |
-| 涉及实质设计选择、复杂领域/业务逻辑、有状态、数据、接口、外部依赖或跨模块实现 | [`engineering-quality.md`](../assets/closed-loop/protocols/engineering-quality.md) |
+| 涉及实质设计选择、复杂领域/业务逻辑、有状态、数据、接口、外部依赖、跨模块流程或其他明显工程风险的实现 | [`engineering-quality.md`](../assets/closed-loop/protocols/engineering-quality.md) |
 | 验证执行与证据 | [`validation-execution.md`](../assets/closed-loop/protocols/validation-execution.md) |
 | 交付审查 | [`change-review.md`](../assets/closed-loop/protocols/change-review.md)；适用时 `code-review` 或 `clean-code-reviewer` Skill |
 
