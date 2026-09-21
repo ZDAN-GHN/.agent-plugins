@@ -1,5 +1,9 @@
 # Repository Agent Instructions
 
+## Domain Vocabulary
+
+A Markdown document that defines a subagent is called a "subagent".
+
 ## AI Native Task Protocol
 
 For standard tasks that change repository content, follow
@@ -41,3 +45,4 @@ maintainer decision.
 ## Hooks
 
 - After creating or updating a skill, run `/skill-quality-auditor` to check whether it needs further improvement.
+- After creating or updating a subagent, run `/subagent-definition-auditor` to check whether it needs further improvement.
