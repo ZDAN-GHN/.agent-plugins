@@ -1,23 +1,61 @@
 # Engineering Quality Decision Protocol
 
-Use this protocol for a change that introduces or changes business behavior, state,
-data, an interface, an external dependency, or a material cross-module flow. Read
-it with the task record before implementation and use
-[`validation-execution.md`](validation-execution.md) and
+Use this protocol for a change involving a substantive design choice, complex
+domain or business logic, state, data, an interface, an external dependency, or
+a material cross-module flow. Read it with the task record before implementation
+and use [`validation-execution.md`](validation-execution.md) and
 [`change-review.md`](change-review.md) before delivery.
 
-This is a proportional design check, not a universal architecture exercise. A
-small, isolated, low-risk change may need only a short assessment; do not add
-abstractions, infrastructure, or speculative extension points without a current
-need. Apply only the constraints that the change can actually affect.
+This is a proportional design check, not a universal architecture exercise or a
+required design document. Identify and handle only constraints the change can
+actually affect. A small, isolated, low-risk change may need only a short
+assessment; do not add abstractions, infrastructure, or speculative extension
+points without a current need.
+
+## Business Intent And Design Evidence
+
+Before mapping a request to an API, database action, or technical object,
+identify the business intent, action, relevant domain state, permitted
+transition, invariant, and lifecycle. A request described as "delete" may mean
+cancel, void, archive, deactivate, close, merge, or revoke; preserve the actual
+meaning in names, models, interfaces, and boundaries where that distinction
+matters. Do not reduce every business action to `create`, `update`, or `delete`
+when those verbs hide behavior or history.
+
+This does not require DDD, a formal state machine, or a new domain layer. It
+requires only enough semantic clarity to keep the implementation from changing
+the business meaning accidentally.
+
+For a material design choice, be able to explain its basis in a concrete
+constraint: business semantics, lifecycle, architecture boundary, consistency,
+compatibility, caller behavior, failure model, rollback, or observability. Keep
+that evidence in the task record only when the decision or risk is material.
+"It changes fewer lines", "it is easiest to test", or "it is familiar" may be
+useful factors, but are not sufficient primary reasons by themselves.
+
+## Stable Patterns, Not Pattern Copying
+
+Before reusing an existing implementation pattern, determine whether it is a
+stable fit: it is still used, has been exercised in related situations, matches
+the current business semantics and boundary, and is not an evident legacy
+workaround or special case. A single historical example is evidence to inspect,
+not automatic proof of a project standard.
+
+Prefer a pattern that has current project evidence and applies to this change.
+If the evidence conflicts, is obsolete, or is insufficient, find the smallest
+additional evidence, use a more suitable established alternative, or surface the
+uncertainty. Do not copy a pattern merely because it is nearby or makes the
+local diff smaller.
 
 ## Establish The Design Boundary
 
 Before editing, identify the existing responsibility boundary, call path, data
-flow, ownership, and stable local patterns. Make the smallest **necessary design
-change** that solves the problem; this is not necessarily the fewest changed
-lines. Prefer an established repository pattern over a new local style,
-framework, or abstraction.
+flow, ownership, and applicable stable local patterns. Make the smallest
+**necessary design change** that solves the problem; this is not necessarily the
+fewest changed lines. Do not save a local edit by adding a special case,
+duplicating policy, bypassing a boundary, or hiding state when that creates a
+larger maintenance cost. Equally, do not expand the task for an aesthetically
+complete architecture.
 
 For the task's actual risk, decide which of these constraints apply and why:
 
@@ -29,8 +67,10 @@ For the task's actual risk, decide which of these constraints apply and why:
   release or rollback order;
 - auditability, diagnostics, correlation, metrics, logs, and business events.
 
-Record material decisions and unresolved risks in the task record. A constraint
-that is not applicable needs no artificial implementation.
+This scan identifies applicable risks; it does not require a written answer,
+design artifact, or implementation for every item. Record material decisions and
+unresolved risks in the task record. A constraint that is not applicable needs
+no artificial implementation.
 
 ## Data Lifecycle
 
@@ -66,6 +106,7 @@ Passing acceptance checks does not by itself make an implementation acceptable.
 Confirm that the change:
 
 - follows repository architecture and conventions and keeps ownership clear;
+- expresses material business behavior at the appropriate abstraction level;
 - avoids needless special cases, duplicated policy, hidden mutable state, and
   incidental coupling;
 - adds an abstraction only when it removes real complexity or matches an
@@ -76,8 +117,8 @@ Confirm that the change:
   behavior.
 
 Use the existing `clean-code-reviewer` and `code-review` Skills when their
-trigger conditions apply; they provide detailed review methods, not competing
-policy.
+trigger conditions apply; they provide detailed code-review methods, not
+competing design policy.
 
 ## Traceability And Observability
 

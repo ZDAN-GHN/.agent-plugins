@@ -20,14 +20,14 @@
 | 标准变更、低风险例外、事故状态或任务记录 | [`task-loops.md`](../assets/closed-loop/task-loops.md)、[`task-record-template.md`](../assets/closed-loop/protocols/task-record-template.md) |
 | 变更前取证 | `task-evidence-analysis` Skill |
 | 事故诊断 | `incident-evidence-diagnosis` Skill |
-| 有状态、数据、接口、外部依赖或跨模块实现 | [`engineering-quality.md`](../assets/closed-loop/protocols/engineering-quality.md) |
+| 涉及实质设计选择、复杂领域/业务逻辑、有状态、数据、接口、外部依赖或跨模块实现 | [`engineering-quality.md`](../assets/closed-loop/protocols/engineering-quality.md) |
 | 验证执行与证据 | [`validation-execution.md`](../assets/closed-loop/protocols/validation-execution.md) |
 | 交付审查 | [`change-review.md`](../assets/closed-loop/protocols/change-review.md)；适用时 `code-review` 或 `clean-code-reviewer` Skill |
 
 ## 工程质量基线
 
 - 根据任务风险识别适用约束：生命周期与状态转换、数据一致性与关联、权限、幂等、并发与事务、真实失败模式、历史数据与兼容性、发布/回滚，以及可追溯性和可观测性。不是每项都必须实现，适用项必须被有意识地处理。
-- 验收通过不等于工程质量合格。实现还必须遵循既有架构和职责边界，避免无必要特殊分支、重复逻辑、隐式状态、偶然耦合、投机抽象和明显技术债；优先复用已验证的本地模式。
+- 验收通过不等于工程质量合格。实现还必须遵循既有架构和职责边界，避免无必要特殊分支、重复逻辑、隐式状态、偶然耦合、投机抽象和明显技术债；优先复用经项目验证且与当前语义相符的本地模式，单个历史实现不自动构成规范。
 - 对业务数据的删除、覆盖、清理、归档、更新或去重，先选择符合业务语义与数据生命周期的策略；不得默认物理删除，也不得机械要求逻辑删除。具体判断见 [`engineering-quality.md`](../assets/closed-loop/protocols/engineering-quality.md) 的 `Data Lifecycle`。
 - 可能影响既有数据、API、消息、配置或调用方的变更，须考虑旧数据和客户端、历史状态、迁移/发布顺序与回滚。对实际存在的空值、重复、重试、超时、并发、部分失败、外部失败和非法状态转换做工程化处理，不为形式堆砌防御代码。
 - 重要流程应能在事后解释发生了什么：按需提供审计、关键操作记录、错误上下文、日志、指标、关联信息或业务事件，且不得泄露敏感数据。选择清晰、可验证、易修改且不过度设计的方案；简单任务保持简单。
