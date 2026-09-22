@@ -53,7 +53,7 @@ Ticket
 
 ### Capability requirement
 
-每张 Ticket 记录完成该工程问题已知需要的最小 capability，例如 `explore`、`research`、`implement`、`verify`。它不是 persona、岗位名称或具体 Subagent 指派。不要创建或引用 `Researcher Agent`、`Developer Agent`、`Reviewer Agent`、`Architect Agent` 等角色模型。
+每张 Ticket 记录完成该工程问题已知需要的最小 capability，例如 `explore`、`research`、`realize`、`verify`。它不是 persona、岗位名称或具体 Subagent 指派。不要创建或引用 `Researcher Agent`、`Developer Agent`、`Reviewer Agent`、`Architect Agent` 等角色模型。
 
 ## 输出语言
 
@@ -61,7 +61,7 @@ Ticket
 
 - 原始上下文为英文时，将解释性内容转为中文，而非原样复制英文。
 - `Blocked by` 中的 Ticket 引用保留其原始 Ticket 标题。
-- `Required capabilities` 使用机器可识别的 capability 标识，例如 `explore`、`research`、`implement`、`verify`。
+- `Required capabilities` 使用机器可识别的 capability 标识，例如 `explore`、`research`、`realize`、`verify`。
 - `Decomposition` 只使用英文枚举：`direct`、`decomposable`、`investigative`、`architectural`、`wide-refactor`。
 - 代码、API、类名、函数名、变量名、文件路径、命令、配置项、协议名和必要技术术语保留原始英文。
 

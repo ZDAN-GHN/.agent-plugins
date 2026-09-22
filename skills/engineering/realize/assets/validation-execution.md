@@ -1,0 +1,1 @@
+../../../../assets/closed-loop/protocols/validation-execution.md
