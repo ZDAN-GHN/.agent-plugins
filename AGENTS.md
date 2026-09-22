@@ -7,13 +7,14 @@ A Markdown document that defines a subagent is called a "subagent".
 ## AI Native Task Protocol
 
 For standard tasks that change repository content, follow
-[`assets/closed-loop/task-loops.md`](assets/closed-loop/task-loops.md) and create
-the full task record required by that protocol before the first write. Eligible
-low-risk tasks may use the protocol's lightweight path; an obvious single-file
-documentation correction may omit a standalone task record. Do not mark a
-standard task complete until its delivery record is filled with actual
-validation and review results, or a low-risk task complete until its required
-lightweight delivery evidence is recorded.
+[`assets/closed-loop/task-loops.md`](assets/closed-loop/task-loops.md). Retain
+its required start and delivery evidence in the authoritative Issue, task
+tracker, or other existing durable task context; do not create a standalone
+`docs/handoff/` document by default. Create a dedicated task record only when
+the maintainer requests one or cross-session traceability materially requires
+it. Do not mark a standard task complete until actual validation and review
+results are recorded, or a low-risk task complete until its lightweight
+delivery evidence is recorded.
 
 Stop and ask the maintainer when the protocol identifies an escalation
 condition. Do not commit, push, merge, deploy, alter permissions, access
