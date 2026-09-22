@@ -60,6 +60,20 @@ grilling → spec → ticket → realize → validation → code quality review 
 
 先用最小必要的代码库证据确认责任边界、调用路径、数据流、稳定本地模式和可观察结果，并按最小完整 vertical slice 推进。不要复制单个历史实现，除非它仍被使用、已经在相似语义下验证且符合当前边界。
 
+### 实现选择阶梯
+
+在理解已确定 contract 和实际流程后，对每个候选新增内容按以下顺序判断，在第一个同时满足当前 contract 与适用工程约束的层级停止：
+
+1. 它是否确实属于 acceptance criteria、Locked Decision、Engineering Constraint 或当前正确性所必需的内容；不是则不增加。
+2. 当前代码库是否已有语义相符、仍被使用的能力、类型、模式或基础设施可复用。
+3. 语言或标准库是否已有合适能力。
+4. 当前平台或框架是否已有原生能力。
+5. 已安装依赖是否已能满足需要。
+6. 只有现有能力不足时，才新增局部实现。
+7. 只有当前需求确实需要时，才引入新的 abstraction、configuration、extension point 或 compatibility layer。
+
+最小实现是**最小必要复杂度**，不是机械最少行数、文件或测试。不得为了更短而损害正确性、可维护性、可验证性、安全、错误处理、数据生命周期、可追溯性或既定工程边界。
+
 当变更涉及实质设计选择、复杂业务逻辑、状态、数据、接口、外部依赖或跨模块流程时，读取并遵循 [Engineering Quality Decision Protocol](assets/engineering-quality.md)。它是生命周期、数据一致性、兼容性、失败行为、可追溯性、抽象边界和 observability 判断的权威来源；本 Skill 不重述或替代该协议。
 
 在开始实现前，用当前证据确认：
@@ -70,6 +84,10 @@ grilling → spec → ticket → realize → validation → code quality review 
 - 哪些现有验证入口能产生相关证据。
 
 对当前正确性必要的问题做最小调整；不影响当前验收的问题记录为 follow-up 或 review finding，而不顺手扩大本次变更。需要高影响决策的情形按输入 contract 的升级边界处理。
+
+### 缺陷修复定位
+
+对 bug 或 behavior fix，不只修 Ticket 暴露的单一路径。修改共享函数、组件、服务或其他责任边界前，确认已知调用方及实际数据/控制流，判断问题属于 caller 语义还是共享责任。多个路径经过同一责任边界且共享同类缺陷时，在该边界做最小修复并验证已知 sibling caller；若调用方语义或约束不同，则分别修复，不强行抽成共享逻辑。
 
 ## 实现与验证策略
 
@@ -107,7 +125,11 @@ mock 只用于真正的系统边界，例如外部 API、时钟、随机性、�
 
 ## 实现约束
 
-每个切片只做当前 acceptance criteria 和适用工程约束所必需的实现。对状态、数据生命周期、失败、兼容性、追溯和维护边界等实际适用风险，遵循 Engineering Quality Decision Protocol 的判断；不要绕过既有边界、夹带无关重构或为未来假设增加抽象。
+每个切片只做当前 acceptance criteria 和适用工程约束所必需的实现。对状态、数据生命周期、失败、兼容性、追溯和维护边界等实际适用风险，遵循 Engineering Quality Decision Protocol 的判断；不要绕过既有边界或夹带无关重构。
+
+### 有意识的简化
+
+当前 scope 可以有意识地接受具 known ceiling 的性能、容量、通用性、并发或数据处理简化，但不得把“暂时不做”表述为已经完整解决。若限制对后续维护有意义，在直接解释代码时保留简短代码注释；否则使用现有 task record、follow-up 或 review finding。记录 limitation、适用范围、升级触发和升级方向；不要为此创建新的 debt framework。
 
 ## 验证反馈与交接
 
@@ -128,8 +150,9 @@ mock 只用于真正的系统边界，例如外部 API、时钟、随机性、�
 在将变更交给 review 前确认：
 
 - [ ] 输入 contract、scope 和 acceptance criteria 已被保留，没有在实现阶段静默改写。
-- [ ] 实现是最小完整 slice；所有额外变更都能说明为当前正确性所必需。
+- [ ] 实现选择阶梯已用于相关候选内容；实现是最小完整 slice，所有额外变更都能说明为当前正确性所必需。
 - [ ] TDD 仅在有稳定 seam、独立预期和相称风险时使用；测试验证行为且 mock 只位于真实边界。
 - [ ] 适用的工程质量判断已遵循，特别是状态、数据生命周期、失败、兼容性和追溯风险。
+- [ ] 缺陷修复已在需要时核对共享边界及已知 caller；有意义的有意识简化已记录 limitation、触发和升级方向。
 - [ ] 验证使用了已有相关入口，并记录了实际、可信且经过清理的结果。
 - [ ] 已满足 review-ready 条件；没有把实施自检、验证计划或个人偏好描述为独立审查或交付批准。
