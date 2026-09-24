@@ -7,6 +7,8 @@ description: Creates and maintains concise AGENTS.md and CLAUDE.md project instr
 
 Goal: concise, actionable agent instructions. Target under 60 lines; never exceed 100.
 
+Format authority: <https://agents.md/>. This skill narrows that public format to a compact, reference-backed file. When the two differ, the line limits, writing rules, and anti-patterns below win.
+
 ## Workflow
 
 1. Inspect before writing:

@@ -66,3 +66,4 @@ Further retrieval is currently low-yield. The source pack covers local repo poli
 ## Changelog
 
 - 2026-05-04: Added source-backed external reference guidance, nested-scope rules, `SPEC.md`, and provenance.
+- 2026-09-24: Absorbed `create-agentsmd` and removed it. That skill restated the public `https://agents.md/` format in long prose, which Decision 5 had already rejected; its guidance to explain rationale and add a Project Overview also contradicted this skill's `Keep rationale out` and README-duplication anti-pattern. Only the format-authority pointer was missing from `SKILL.md`, so it was added there with an explicit precedence rule.
