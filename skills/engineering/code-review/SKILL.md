@@ -12,6 +12,14 @@ Both axes run as **parallel sub-agents** so they don't pollute each other's cont
 
 Before resolving issue references, read `docs/agents/issue-tracker.md` and use its declared workflow. If it is missing, read [`assets/issue-tracker/SETUP.md`](assets/issue-tracker/SETUP.md), execute the tracker setup flow, and reread the resulting file before continuing.
 
+## HARD GATE
+
+- Do not review without a pinned fixed point. If the user did not supply one, ask before diffing.
+- The review itself is read-only: report findings only. Do not edit files, fix the issues found, change tracker state, or commit. The one-time tracker setup above is the only permitted write.
+- Do not report a finding without the cited standard, smell name, or spec line that supports it.
+- Do not rewrite a sub-agent's classification of its own findings. Aggregate them as they came back; do not merge or rerank across axes, and do not let one axis' conclusions seed the other.
+- Run each axis as an independent sub-agent, except the documented skip when no spec exists (steps 2 and 4).
+
 ## Process
 
 ### 1. Pin the fixed point

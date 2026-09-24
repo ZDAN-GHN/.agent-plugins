@@ -27,6 +27,40 @@ CI configuration, or a repository document. Do not invent an equivalent
 validator, replace project tooling, or run unrelated broad checks merely to
 produce a green result.
 
+## Risk-Tiered Validation
+
+Use the task record's `Task risk tier` to size how much evidence the selected
+existing entries must produce. The tier changes the required coverage, not the
+result definitions below, the available commands, or the permission boundary.
+This table is authoritative for tier evidence requirements;
+`task-record-template.md` defines the tier characteristics.
+
+| Tier | Required evidence from existing entries |
+| --- | --- |
+| `R0` | A focused diff or manual check of the changed files |
+| `R1` | The focused test, lint, type-check, or build entries that cover the changed behavior |
+| `R2` | `R1` evidence plus the existing regression, contract, migration, or compatibility checks covering affected callers and historical data |
+| `R3` | `R2` evidence plus the project's required security or permission checks, with the maintainer authorization required by [`../task-loops.md`](../task-loops.md) recorded before the operation |
+
+Apply the tier with these rules:
+
+- A lower tier reduces the amount of proportional evidence. It never makes an
+  unrun, irrelevant, inconclusive, or misreported validation acceptable.
+- A higher tier does not authorize unrelated broad checks, a new runner, or work
+  outside the recorded scope.
+- Confirm the declared tier against the change's observed impact before relying
+  on its evidence. Correct an under-declared tier and re-select the entries it
+  requires; do not honor a tier the diff contradicts.
+- When evidence shows broader impact than recorded, raise the tier, re-select
+  the entries required by the new tier, and record the change. Do not lower a
+  tier to avoid running a required check.
+- The tier is task risk, not review severity. It does not substitute for
+  `change-review.md` findings, and it never replaces an escalation or
+  authorization required by `../task-loops.md`.
+- The tier never decides the task-loop path. Lightweight-path eligibility is
+  determined solely by the low-risk change exception in
+  [`../task-loops.md`](../task-loops.md).
+
 ## Execute Within The Task Boundary
 
 Before running a command, confirm that it is relevant to the recorded scope and
@@ -110,6 +144,8 @@ Before updating a task delivery record, confirm:
 
 - [ ] Every result is `passed`, `failed`, or `blocked`, with the matching
       evidence fields completed.
+- [ ] The evidence matches the recorded task risk tier, and any tier change is
+      recorded with its re-selected entries.
 - [ ] Every command is an existing, relevant repository entry or an explicitly
       identified reproducible manual step.
 - [ ] Exit statuses and summaries describe actual execution, not a plan or

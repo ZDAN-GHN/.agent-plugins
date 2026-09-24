@@ -29,6 +29,9 @@ For validation execution and evidence, follow
 Reuse declared project validation entries and record their actual results; do
 not invent a global runner or report planned work as executed.
 
+For the required task-record fields and recording rules, follow
+[`assets/closed-loop/protocols/task-record-template.md`](assets/closed-loop/protocols/task-record-template.md).
+
 For change review, follow
 [`assets/closed-loop/protocols/change-review.md`](assets/closed-loop/protocols/change-review.md).
 Provide the task goal, scoped diff, and actual validation evidence; record
@@ -42,6 +45,11 @@ maintainer decision.
 - Existing Skills live under `skills/`; preserve each Skill's local conventions
   and validate only the changed scope unless a broader regression is relevant.
 - Do not read or modify `.mimosa/` unless the task explicitly requires it.
+
+## Test Quality
+
+- Automated test code quality follows the F.I.R.S.T. criteria in
+  [`assets/closed-loop/protocols/test-quality-first.md`](assets/closed-loop/protocols/test-quality-first.md).
 
 ## Hooks
 

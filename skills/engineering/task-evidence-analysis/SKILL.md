@@ -14,6 +14,15 @@ Do not use this Skill as a substitute for implementation, validation execution,
 change review, or a root-cause declaration. It gathers and assesses evidence;
 the main workflow decides whether to proceed, block, or escalate.
 
+## HARD GATE
+
+- Read-only and analysis-only. The scope limits stated above and every
+  prohibition and stop condition in `Safety Boundaries` are blocking, not
+  advisory; this section does not restate them.
+- Stop and surface the evidence when any of those conditions applies. Do not
+  proceed on an assumption, and do not hand this analysis forward as if it were
+  proven.
+
 ## Inputs And Output
 
 Required inputs are a task description and repository context. Incident work may

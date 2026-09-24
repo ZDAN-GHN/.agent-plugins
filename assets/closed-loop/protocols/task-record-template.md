@@ -16,6 +16,7 @@ with task-specific facts; use `not applicable` only with a reason.
 - Input / evidence: [Requirement, reproduction, or sanitized evidence]
 - Non-goals: [Explicitly excluded work]
 - Affected scope: [Modules, interfaces, or `unknown` with reason]
+- Task risk tier: `R0` | `R1` | `R2` | `R3` [with the concrete reason]
 - Acceptance criteria:
   - [Criterion that can be verified]
 - Planned validation:
@@ -44,6 +45,7 @@ with task-specific facts; use `not applicable` only with a reason.
   | Task goal / acceptance source | [Issue, request, or approved task record] |
   | Scoped diff / baseline | `[exact diff command or reviewable change reference]` |
   | Actual validation evidence | [Links or task-record rows used by the reviewer] |
+  | Declared task risk tier | [Tier from the Start Record, and whether the observed diff matches it] |
   | Review method | [`$code-review`, independent read-only review, or bounded main-Agent review] |
 - Review findings:
 
@@ -60,6 +62,10 @@ with task-specific facts; use `not applicable` only with a reason.
 
 ## Recording Rules
 
+- Record the task risk tier before the first repository write and use it to size
+  proportional validation evidence with
+  [`validation-execution.md`](validation-execution.md). Raise the tier when new
+  evidence shows broader impact; never lower it to reduce required evidence.
 - Record commands that actually ran, their exit status, and their observed
   result. Do not copy planned validation into `Actual validation`.
 - A failed, blocked, or inconclusive validation result prevents `delivered` and
@@ -70,3 +76,32 @@ with task-specific facts; use `not applicable` only with a reason.
 - Do not put secrets, authentication material, production/customer data, or
   full sensitive logs in the record. Use a sanitized summary and a permitted
   evidence reference.
+
+## Task Risk Tiers
+
+A task risk tier states the change's inherent task risk so that validation
+evidence stays proportional. It is not a review finding severity: `R0`-`R3`
+never map to the `P0`-`P3` scale in [`change-review.md`](change-review.md), and
+a low-tier task can still produce a `P0` finding.
+
+| Tier | Task characteristics |
+| --- | --- |
+| `R0` | No executable behavior, interface, dependency, permission, data, or deployment impact |
+| `R1` | Local behavior change inside one module with no public contract, stored data, permission, or caller impact |
+| `R2` | Cross-module behavior, public or internal interface, stored data shape, message, configuration, dependency, or release-order impact |
+| `R3` | Security, permission, privacy, irreversible operation, production data, deployment, or access-control impact |
+
+[`validation-execution.md`](validation-execution.md) is authoritative for the
+evidence each tier requires; this section only defines the tier characteristics.
+
+The tier sizes evidence and never changes result classification or the task-loop
+path. Eligibility for the lightweight path is determined solely by the low-risk
+change exception in [`../task-loops.md`](../task-loops.md), which is narrower
+than `R0`: it also requires exactly one changed file and excludes governance and
+protocol files, `AGENTS.md`, security or permission rules, and task records. An
+`R0` change that fails those conditions still needs the full task record and
+delivery loop.
+
+A lower tier does not permit an unrun, irrelevant, or misreported validation,
+and a higher tier does not authorize unrelated broad checks, a new validation
+runner, or scope expansion.
