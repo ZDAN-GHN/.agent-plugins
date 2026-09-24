@@ -1,5 +1,5 @@
 ---
-name: design-taste-frontend
+name: taste-skill
 description: |
   Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships interfaces that do not look templated. Real design systems when applicable, audit-first on redesigns, strict pre-flight check.
 triggers:
@@ -26,7 +26,7 @@ od:
       - anti-ai-slop
       - animation-discipline
   example_prompt: |
-    Create a premium landing page that follows design-taste-frontend: infer the design read, set the dials, avoid AI-slop patterns, and output a polished responsive HTML artifact.
+    Create a premium landing page that follows taste-skill: infer the design read, set the dials, avoid AI-slop patterns, and output a polished responsive HTML artifact.
 ---
 
 
