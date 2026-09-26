@@ -2,11 +2,11 @@
 name: Code Review
 description: Review a scoped code or configuration change for correctness, requirements fit, maintainability, and test gaps; route security analysis to Security Audit.
 tools: read, grep, find, ls
+skills: code-review, clean-code-reviewer
 model: claude-fly/claude-opus-5
 thinking: high
-isolated: true
-isolation: off
-prompt_mode: replace
+inheritProjectContext: true
+inheritSkills: false
 ---
 
 # Mission

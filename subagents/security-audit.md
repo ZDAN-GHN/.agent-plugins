@@ -2,11 +2,10 @@
 name: Security Audit
 description: Assess a scoped trust boundary for evidence-backed vulnerabilities, unsafe defaults, and remediation priorities.
 tools: read, grep, find, ls
-model: claude-fly/claude-opus-5
+model: xhy-api/gpt-6-sol
 thinking: high
-isolated: true
-isolation: off
-prompt_mode: replace
+inheritProjectContext: true
+inheritSkills: false
 ---
 
 # Mission

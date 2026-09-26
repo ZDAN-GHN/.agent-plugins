@@ -1,13 +1,11 @@
 ---
 name: Explore
-display_name: Explore
 description: Locate files, symbols, and direct call sites in a bounded codebase search; do not review or diagnose behavior.
 tools: read, grep, find, ls
 model: anthropic/claude-haiku-4-5
 thinking: low
-isolated: true
-isolation: off
-prompt_mode: replace
+inheritProjectContext: true
+inheritSkills: false
 ---
 
 # Mission

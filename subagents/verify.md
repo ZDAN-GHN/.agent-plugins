@@ -2,11 +2,10 @@
 name: Verify
 description: Execute bounded, non-writing checks and report requirement-level evidence for an existing change.
 tools: read, grep, find, ls, bash
-model: claude-fly/claude-haiku-4-5
-thinking: medium
-isolated: true
-isolation: off
-prompt_mode: replace
+model: xhy-api-fallback/gpt-6-luna
+thinking: high
+inheritProjectContext: true
+inheritSkills: false
 ---
 
 # Mission
