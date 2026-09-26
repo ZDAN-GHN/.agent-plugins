@@ -1,8 +1,8 @@
 ---
-name: Security Audit
+name: SecurityAudit
 description: Assess a scoped trust boundary for evidence-backed vulnerabilities, unsafe defaults, and remediation priorities.
 tools: read, grep, find, ls
-model: xhy-api/gpt-6-sol
+model: gpt-6-sol
 thinking: high
 inheritProjectContext: true
 inheritSkills: false

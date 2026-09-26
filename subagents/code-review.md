@@ -1,9 +1,9 @@
 ---
-name: Code Review
+name: CodeReview
 description: Review a scoped code or configuration change for correctness, requirements fit, maintainability, and test gaps; route security analysis to Security Audit.
 tools: read, grep, find, ls, bash
 skills: code-review, clean-code-reviewer
-model: claude-fly/claude-opus-5
+model: claude-opus-5
 thinking: high
 inheritProjectContext: true
 inheritSkills: false

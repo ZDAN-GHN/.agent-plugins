@@ -2,7 +2,7 @@
 name: Verify
 description: Execute bounded, non-writing checks and report requirement-level evidence for an existing change.
 tools: read, grep, find, ls, bash
-model: xhy-api-fallback/gpt-6-luna
+model: gpt-6-luna
 thinking: high
 inheritProjectContext: true
 inheritSkills: false

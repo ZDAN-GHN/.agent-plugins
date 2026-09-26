@@ -2,7 +2,7 @@
 name: Explore
 description: Locate files, symbols, and direct call sites in a bounded codebase search; do not review or diagnose behavior.
 tools: read, grep, find, ls
-model: anthropic/claude-haiku-4-5
+model: claude-haiku-4-5
 thinking: low
 inheritProjectContext: true
 inheritSkills: false
