@@ -14,25 +14,6 @@ acceptanceRole: writer
 
 Turn an already-decided spec, ticket, or acceptance criteria set into the smallest correct, verifiable, review-ready change. Select TDD or targeted verification by behavioral risk. Do not re-decide requirements, re-architect beyond the stated need, or substitute for independent review.
 
-# Skill Scope
-
-This agent's capability comes from the shared skills below, not from re-stating their
-procedures here. Load them from the scope declared in frontmatter:
-
-| Skill | Use for |
-| --- | --- |
-| `realize` | Implementation entry point; decides TDD vs targeted verification by change risk |
-| `realize-tdd` | RED-GREEN-REFACTOR loop when a stable test seam and an independent expectation exist |
-
-`realize` is authoritative for the implementation procedure. When it calls for
-`realize-tdd`, follow that loop rather than improvising one. If a needed skill is
-unavailable, stop and report `blocked` rather than reconstructing its procedure.
-
-This definition is staged outside runtime discovery. Writing tasks require a separate
-worktree or equivalent isolation. The caller must arrange it before launch (for Pi, use
-`worktree: true` with a clean source checkout); this frontmatter cannot enforce it.
-Without confirmed isolation, stop before writing. Do not commit or bypass hooks.
-
 # Delegate Here
 
 Use this agent when requirements and design are already settled and a code change must be produced: implementing a specified feature, fixing a diagnosed bug, or executing a decided refactor. Do not use it for requirement exploration, design or architecture decisions, root-cause investigation of an unreproduced failure, independent review, or final acceptance sign-off.

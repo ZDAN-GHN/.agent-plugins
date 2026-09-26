@@ -12,6 +12,10 @@
 4. 已安装包与内置定义（最低优先级）
 
 按解析后的 Agent 名称合并；项目定义覆盖用户目录中同名定义。`subagents/` 不参与发现。
+本机用户目录已有 `review.md`（Code Review）和 `Explore.md`（Explore）。直接复制
+`code-review.md`、`explore.md` 会在同一目录留下两个同名定义；其他同名文件则可能
+覆盖现有全局版本。不要整目录复制；迁移时先对照现有定义，经批准后逐项替换并核验
+实际发现结果。本轮不修改全局目录。
 
 ## 能力边界
 
@@ -24,7 +28,7 @@ Skill 的名称、说明和位置，正文在任务需要时才读取，**不是
 | --- | --- | --- |
 | Implement（仅暂存） | `realize`, `realize-tdd` | 实现入口、风险相称的 TDD |
 | Debug | `incident-evidence-diagnosis`, `task-evidence-analysis` | 故障证据与仓库影响分析 |
-| Code Review | `clean-code-reviewer` | 代码质量检查；完整 `code-review` 编排仍由 Main 承担 |
+| Code Review | `code-review`, `clean-code-reviewer` | 固定基线的双轴审查、定向代码质量检查 |
 | Explore, Verify, Security Audit, Technical Research | 空 | 当前没有与其职责相符、可直接复用的仓库 Skill |
 
 `inheritProjectContext: true` 继承项目的 `AGENTS.md` 等指令，不继承 Main Agent 的
@@ -33,9 +37,10 @@ Skill 的名称、说明和位置，正文在任务需要时才读取，**不是
 **不是不可绕过的 Skill 访问控制**；调用方应遵循定义的职责边界，不向其注入无关 Skill。
 这些工具边界也不是文件系统沙箱：`read` 和 `bash` 仍可访问运行环境允许的路径。
 
-`code-review` Skill 需要并行 Subagent 编排及 `git diff` 等能力，与只读的
-Code Review 定义不同，留在 Main Agent 层；`realize-tdd` 与 `realize` 由
-Implement 共享使用。验证协议是项目规则而非独立 Skill，由调用方提供验证入口。
+`code-review` Skill 在 Code Review 内直接完成双轴审查，不派生 Subagent；
+Code Review 的 `bash` 仅用于只读 Git 查询，禁止写入，限制依赖 Prompt 而非
+命令级沙箱。`realize-tdd` 与 `realize` 由 Implement 共享使用。
+验证协议是项目规则而非独立 Skill，由调用方提供验证入口。
 
 ### 扩展与写入隔离
 
@@ -170,9 +175,9 @@ README 只是说明文档，不是长期 Subagent。本次没有移动、删除�
 | Frontmatter 可映射概念 | 名称、描述、工具、模型、Skill 范围 | 各工具的字段、标识符和取值需逐项核对；同名 `skills` 不保证加载语义相同 |
 | Pi 插件专用配置 | `inheritProjectContext`、`inheritSkills`、`thinking`、`async`、`acceptanceRole` 等 | 移植时按目标工具能力删除或转换；写入隔离不能靠这些字段代替 |
 
-每个定义在 frontmatter 中声明 `inheritSkills: false`，有对应能力时列出 `skills:`，
-并在正文写 `# Skill Scope`（或 `# 能力范围（Skill Scope）`）供其他工具适配和人工阅读。
-即使正文章节保留了语义，也不能代替目标工具的运行时限制。`model:` 值、Agent 名称及
+Plan 声明 `inheritSkills: true`，其他定义采用 `false`；有对应能力时列出 `skills:`。
+正文仅在需要解释使用条件时补充 Skill Scope，不能代替目标工具的运行时限制。
+`model:` 值、Agent 名称及
 工具名均需按目标工具适配，不可把本目录原样复制到 Claude Code。
 
 ## 版本历史
