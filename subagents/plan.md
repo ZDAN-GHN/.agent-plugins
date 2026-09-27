@@ -5,7 +5,10 @@ tools: read, grep, find, ls
 model: claude-opus-5
 thinking: high
 inheritProjectContext: true
+inheritGlobalContext: true
 inheritSkills: true
+acceptanceRole: read-only
+advertise: false
 ---
 
 # Mission

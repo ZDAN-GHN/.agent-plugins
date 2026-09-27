@@ -5,7 +5,10 @@ tools: read, grep, find, ls, bash
 model: gpt-6-luna
 thinking: high
 inheritProjectContext: true
+inheritGlobalContext: true
 inheritSkills: false
+acceptanceRole: read-only
+advertise: true
 ---
 
 # Mission

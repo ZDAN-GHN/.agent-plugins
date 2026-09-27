@@ -5,7 +5,10 @@ tools: read, grep, find, ls
 model: claude-haiku-4-5
 thinking: low
 inheritProjectContext: true
+inheritGlobalContext: true
 inheritSkills: false
+acceptanceRole: read-only
+advertise: true
 ---
 
 # Mission

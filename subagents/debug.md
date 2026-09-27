@@ -6,7 +6,10 @@ skills: incident-evidence-diagnosis, task-evidence-analysis
 model: claude-opus-5
 thinking: high
 inheritProjectContext: true
+inheritGlobalContext: true
 inheritSkills: false
+acceptanceRole: read-only
+advertise: true
 ---
 
 # Mission

@@ -5,7 +5,10 @@ tools: read, bash, grep, find, web_search, fetch_content, get_search_content, so
 model: claude-haiku-4-5
 thinking: high
 inheritProjectContext: true
+inheritGlobalContext: true
 inheritSkills: false
+acceptanceRole: read-only
+advertise: true
 async: true
 ---
 

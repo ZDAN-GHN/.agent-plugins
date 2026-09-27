@@ -6,8 +6,11 @@ skills: realize, realize-tdd
 model: gpt-6-sol
 thinking: high
 inheritProjectContext: true
+inheritGlobalContext: true
 inheritSkills: false
+acceptance: '{"level":"checked","review":{"agent":"CodeReview","required":true}}'
 acceptanceRole: writer
+advertise: true
 ---
 
 # Mission

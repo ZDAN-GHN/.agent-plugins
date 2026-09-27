@@ -5,7 +5,10 @@ tools: read, grep, find, ls
 model: gpt-6-sol
 thinking: high
 inheritProjectContext: true
+inheritGlobalContext: true
 inheritSkills: false
+acceptanceRole: read-only
+advertise: true
 ---
 
 # Mission
