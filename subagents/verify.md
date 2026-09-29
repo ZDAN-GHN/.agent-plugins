@@ -1,8 +1,7 @@
 ---
-name: Verify
+name: verify
 description: Execute bounded, non-writing checks and report requirement-level evidence for an existing change.
 tools: read, grep, find, ls, bash
-model: gpt-6-luna
 thinking: high
 inheritProjectContext: true
 inheritGlobalContext: true

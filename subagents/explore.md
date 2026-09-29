@@ -1,8 +1,7 @@
 ---
-name: Explore
+name: explore
 description: Locate files, symbols, and direct call sites in a bounded codebase search; do not review or diagnose behavior.
 tools: read, grep, find, ls
-model: claude-haiku-4-5
 thinking: low
 inheritProjectContext: true
 inheritGlobalContext: true

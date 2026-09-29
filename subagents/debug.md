@@ -1,9 +1,8 @@
 ---
-name: Debug
+name: debug
 description: Establish evidence-backed root cause and the smallest safe fix direction for a reported failure or regression.
 tools: read, grep, find, ls, bash
 skills: incident-evidence-diagnosis, task-evidence-analysis
-model: claude-opus-5
 thinking: high
 inheritProjectContext: true
 inheritGlobalContext: true

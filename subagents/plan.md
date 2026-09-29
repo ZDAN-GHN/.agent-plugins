@@ -1,8 +1,7 @@
 ---
-name: Plan
+name: plan
 description: Turn confirmed requirements and repository evidence into a bounded technical design and implementation plan that Implement can execute; do not code or reopen product decisions.
 tools: read, grep, find, ls
-model: claude-opus-5
 thinking: high
 inheritProjectContext: true
 inheritGlobalContext: true

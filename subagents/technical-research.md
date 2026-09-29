@@ -1,8 +1,7 @@
 ---
-name: TechnicalResearch
+name: technical-research
 description: Verify external technical facts about third-party behavior, APIs, and version compatibility using public sources and traceable evidence; do not design or implement.
 tools: read, bash, grep, find, web_search, fetch_content, get_search_content, source_check
-model: claude-haiku-4-5
 thinking: high
 inheritProjectContext: true
 inheritGlobalContext: true

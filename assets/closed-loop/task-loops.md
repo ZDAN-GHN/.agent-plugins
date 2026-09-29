@@ -99,9 +99,6 @@ data, or runtime boundary, use the full task record and delivery loop.
 
 ## Task Context Rules
 
-This section replaces the former `docs/agents/task-context.md`. All rules are
-now self-contained in this protocol.
-
 ### Where Work Lives
 
 - **Multi-checkpoint task**: Keep the reviewable plan at

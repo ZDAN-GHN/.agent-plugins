@@ -1,9 +1,8 @@
 ---
-name: Implement
+name: implement
 description: Implement an actionable documented plan or other settled engineering task as a minimal, verifiable, review-ready code change; select TDD or targeted verification by risk without redesigning requirements or expanding scope.
 tools: read, write, edit, grep, find, ls, bash
 skills: realize, realize-tdd
-model: gpt-6-sol
 thinking: high
 inheritProjectContext: true
 inheritGlobalContext: true
