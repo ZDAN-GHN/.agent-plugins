@@ -1,0 +1,1 @@
+human 目录提供人类阅读文档，目前存在的 workflow-pattern.md 是 Agent 工作流详细运作模式

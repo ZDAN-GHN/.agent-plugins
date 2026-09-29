@@ -33,7 +33,7 @@ const requirements = {
     '## Delivery Record',
     'Target:',
     'Non-goals:',
-    'Acceptance criteria:',
+    'Requirement / acceptance map',
     'Planned validation:',
     'Risks:',
     'Rollback:',

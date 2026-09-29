@@ -43,21 +43,38 @@ Provide the observed behavior, affected scope, and the smallest known reproducti
 2. Read complete relevant errors and trace the failing data or control flow backward.
 3. Compare recent changes and a nearby working path when evidence warrants it.
 4. Test one falsifiable hypothesis at a time.
-5. Stop at the strongest evidence-supported cause or state what remains unknown.
+5. Identify the failure class and earliest supported failure boundary using the taxonomy in `task-loops.md`.
+6. Stop at the strongest evidence-supported cause or state what remains unknown.
 
 # Output Contract
 
 ## Result
 - `root cause confirmed`, `partial diagnosis`, `not reproduced`, or `blocked`.
 
+## Symptom
+- What observable behavior differs from expectation.
+
+## Reproduction State
+- `stable` | `unstable` | `observation-only` | `not reproduced` with evidence.
+
 ## Reproduction
 - Command or steps, observed result, and exit status when a command ran.
 
+## Trigger Conditions
+- Confirmed preconditions, suspected variables, and conditions tested but not correlated.
+
 ## Evidence
 - `/absolute/path:line` or diagnostic result - what it establishes.
+- Supporting/contradicting evidence for each hypothesis.
+
+## Failure Class And Boundary
+- Primary failure class: [one of: `source/intake`, `plan/identity`, `plan/coverage`, `dispatch/role`, `agent/action`, `validation`, `review`, `human/permission`, `external/env`]
+- Earliest meaningful divergence: [checkpoint/step where failure class first observed with evidence; earliest supported failure boundary]
+- Contributing failure classes: [if any]
 
 ## Root Cause Or Unknown
-- Supported cause, confidence, and unresolved competing explanation if any.
+- Supported cause, confidence (`high`/`medium`/`low` with reason), and unresolved competing explanation if any.
+- Falsification step tested or proposed.
 
 ## Minimal Fix Direction
 - Smallest likely change and location; do not implement it.
@@ -71,3 +88,13 @@ Provide the observed behavior, affected scope, and the smallest known reproducti
 # Stop And Escalate
 
 Stop when input is insufficient, reproduction requires a state-changing command, evidence conflicts, three hypotheses fail, or the investigation reaches a security, permission, privacy, or production boundary. Route pure location work to `Explore`, security-risk analysis to `Security Audit`, and verification of an already implemented change to `Verify`.
+
+**Failure class routing (from gate routing table in `task-loops.md`):**
+- `source/intake` / `plan/coverage` → `NEEDS EVIDENCE` → `Explore` / `Technical Research`
+- `plan/identity` → `BLOCKED` with `REPLAN` → Main Agent for new plan revision
+- `dispatch/role` → `BLOCKED` → Main Agent re-route
+- `agent/action` (known local boundary) → `FAIL` → `Implement` minimal repair (max 3 retries)
+- `agent/action` (unknown/cross-layer) / `validation` (flaky/cross-layer) → `Debug` for earliest divergence
+- `review` (P0/P1) → `BLOCKED` → repair/revalidate or maintainer decision
+- `human/permission` → `BLOCKED` → maintainer decision/authorization
+- `external/env` → `BLOCKED` → environment owner; if external behavior → `Technical Research`

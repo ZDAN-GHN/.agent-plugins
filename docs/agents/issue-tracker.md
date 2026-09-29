@@ -1,16 +1,5 @@
-# Issue Tracker: GitHub
+# Legacy Tracker Reference
 
-The authoritative tracker for this repository is GitHub Issues in
-`ZDAN-GHN/.agent-plugins`.
+This file is retained only so historical links remain understandable. It is **not** the active task-tracking or publication policy. New plans, task records, decisions and delivery evidence belong in repository files under `docs/plans/` as described in the **Task Context Rules** in [`../closed-loop/task-loops.md#task-context-rules`](../closed-loop/task-loops.md#task-context-rules). Do not create, comment on, edit, or close an external issue as part of the current workflow.
 
-## Operations
-
-- Create: `gh issue create --title "..." --body "..."`
-- Read: `gh issue view <number> --comments`
-- List: `gh issue list --state open --json number,title,body,labels,comments`
-- Comment: `gh issue comment <number> --body "..."`
-- Label: `gh issue edit <number> --add-label "..."`
-- Close: `gh issue close <number> --comment "..."`
-
-GitHub Issues are the publication target for specifications and implementation
-work. Pull requests are not a request surface for triage.
+Older `docs/handoff/` documents and external links are historical source material, not evidence of current approval, validation or completion.

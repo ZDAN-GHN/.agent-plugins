@@ -70,6 +70,8 @@ Keep the following concepts separate:
 | Root-cause hypothesis | What mechanism could explain the symptom and trigger conditions? |
 | Confidence | How strongly does current evidence support that hypothesis? |
 | Repair candidate | What bounded change could address the hypothesis, and how would it be validated? |
+| Failure class | Which category from the taxonomy in `task-loops.md` does this failure belong to? |
+| Earliest failure boundary | At which checkpoint/step was the failure class first observed with evidence? |
 
 For every root-cause hypothesis, include:
 
@@ -147,6 +149,12 @@ escalation, and delivery decision.
 
 | Condition | State | Evidence | Next discriminating step |
 | --- | --- | --- | --- |
+
+## Failure Class And Boundary
+
+- Primary failure class: [one of: `source/intake`, `plan/identity`, `plan/coverage`, `dispatch/role`, `agent/action`, `validation`, `review`, `human/permission`, `external/env`]
+- Earliest supported failure boundary: [checkpoint/step where failure class first observed with evidence]
+- Contributing failure classes: [if any]
 
 ## Root-Cause Hypotheses
 

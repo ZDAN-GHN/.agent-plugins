@@ -8,26 +8,29 @@ A Markdown document that defines a subagent is called a "subagent".
 
 For standard tasks that change repository content, follow
 [`assets/closed-loop/task-loops.md`](assets/closed-loop/task-loops.md). Retain
-its required start and delivery evidence in the authoritative Issue, task
-tracker, or other existing durable task context; do not create a standalone
-`docs/handoff/` document by default. Create a dedicated task record only when
-the maintainer requests one or cross-session traceability materially requires
-it. Do not mark a standard task complete until actual validation and review
-results are recorded, or a low-risk task complete until its lightweight
-delivery evidence is recorded.
+its required start and delivery evidence in the repository-local task context
+specified by the **Task Context Rules** in
+[`assets/closed-loop/task-loops.md#task-context-rules`](assets/closed-loop/task-loops.md#task-context-rules).
+Keep multi-checkpoint plans and their evidence records under `docs/plans/`; do
+not use an external issue tracker or create a standalone `docs/handoff/`
+document by default. Do not mark a standard task complete until actual
+validation and review results are recorded, or a low-risk task complete until
+its lightweight delivery evidence is recorded.
 
 Stop and ask the maintainer when the protocol identifies an escalation
 condition. Do not commit, push, merge, deploy, alter permissions, access
 production data, or perform irreversible operations without explicit approval.
 
-Before closing a GitHub Issue, update its acceptance-criteria checkboxes. Each
-checked item must map one-to-one to verified evidence in the task delivery
-record; leave unmet items unchecked and keep the Issue open.
+When a task record contains acceptance checkboxes, mark one only when it maps
+one-to-one to actual verified evidence in the local delivery record. Leave
+unmet items unchecked; an implementation write is not completion evidence.
 
 For validation execution and evidence, follow
 [`assets/closed-loop/protocols/validation-execution.md`](assets/closed-loop/protocols/validation-execution.md).
 Reuse declared project validation entries and record their actual results; do
-not invent a global runner or report planned work as executed.
+not invent a global runner or report planned work as executed. If the user
+prohibits checks or review for a writing-only pass, do not run them; record
+`not run` and keep final delivery `blocked` rather than claiming completion.
 
 For the required task-record fields and recording rules, follow
 [`assets/closed-loop/protocols/task-record-template.md`](assets/closed-loop/protocols/task-record-template.md).

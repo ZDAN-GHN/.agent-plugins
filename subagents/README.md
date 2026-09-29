@@ -1,6 +1,6 @@
 # Subagent 定义说明
 
-本目录保存跨工具适配用的 subagent 源定义，不在当前 `pi-subagents` v0.71.0 的
+本目录保存跨工具适配用的 subagent 源定义，不在本机 `pi-subagents` v0.73.1 的
 发现路径内。仅在这里修改不会改变 Pi 的运行状态；复制到生效目录前须核验目标环境，
 且不要把本 `README.md` 当 Agent 定义复制。
 
@@ -12,10 +12,12 @@
 4. 已安装包与内置定义（最低优先级）
 
 按解析后的 Agent 名称合并；项目定义覆盖用户目录中同名定义。`subagents/` 不参与发现。
-本机用户目录已有 `review.md`（Code Review）和 `Explore.md`（Explore）。直接复制
-`code-review.md`、`explore.md` 会在同一目录留下两个同名定义；其他同名文件则可能
-覆盖现有全局版本。不要整目录复制；迁移时先对照现有定义，经批准后逐项替换并核验
-实际发现结果。本轮不修改全局目录。
+本机 2026-09-28 的 `subagent({action:"list",capabilities:true})` 实测发现八个用户级
+定义：`CodeReview`、`Debug`、`Explore`、`Implement`、`Plan`、`SecurityAudit`、
+`TechnicalResearch`、`Verify`；项目配置目录当前没有对应覆盖定义。源文件与用户级
+文件一一对应，但五个定义的 `model` 字段与仓库源不同，`Plan` 正文也不同。发现结果是本机快照，
+其他安装环境或后续配置可能变化。不要整目录复制；先按实际发现结果对照定义，
+经单独授权后仅替换必要内容并核验，不覆盖用户已有模型选择。
 
 ## 能力边界
 
@@ -26,7 +28,7 @@ Skill 的名称、说明和位置，正文在任务需要时才读取，**不是
 
 | Agent | 定义内 Skill Scope | 用途 |
 | --- | --- | --- |
-| Implement（仅暂存） | `realize`, `realize-tdd` | 实现入口、风险相称的 TDD |
+| Implement（本机用户级已生效） | `realize`, `realize-tdd` | 实现入口、风险相称的 TDD |
 | Debug | `incident-evidence-diagnosis`, `task-evidence-analysis` | 故障证据与仓库影响分析 |
 | Code Review | `code-review`, `clean-code-reviewer` | 固定基线的双轴审查、定向代码质量检查 |
 | Explore, Verify, Security Audit, Technical Research | 空 | 当前没有与其职责相符、可直接复用的仓库 Skill |
@@ -53,7 +55,7 @@ Implement 是唯一持有 `write`、`edit` 的本目录 Agent。项目协议要�
 Subagent 在隔离 worktree 或等效环境中运行。新插件的 native worktree 不自动
 提交或绕过 hooks，但 Agent 定义**不能强制** `worktree: true`：Main Agent 必须在
 调用前确认源工作区干净并显式启用隔离；否则 Implement 必须在写入前停止。
-本轮不把暂存定义复制到运行目录，也不改变全局 worktree 配置。
+仓库源文件本身不改变生效定义；修改用户级目录或全局 worktree 配置需单独授权。
 
 ### 网络访问边界
 
@@ -127,8 +129,8 @@ Review 已给出明确定位的问题直接进 `Implement`；症状不明的失�
 | 03 | 方案设计 / Spec | Main Agent（`to-spec`）；Plan 见下方说明 |
 | 04 | 生成验收标准 | Main Agent |
 | 05 | 再次搜索代码 | Explore（与 02 同一 Agent，不同调用） |
-| 06 | 实施计划 | Plan（当前禁用）；现由 Main Agent 用 `planning-and-task-breakdown` / `to-tickets` 承载 |
-| 07 | 编写代码 | Implement（仅暂存；调用前需落实写入隔离） |
+| 06 | 实施计划 | Plan（本机用户级已生效；Main Agent 仍负责审批和覆盖核验） |
+| 07 | 编写代码 | Implement（本机用户级已生效；调用前需落实写入隔离） |
 | 08 | Review 代码 | Code Review（+ 安全向路由 Security Audit） |
 | 09 | 修复问题 | Implement，或根因未定时先 Debug |
 | 10 | 验收 | Verify |
@@ -152,17 +154,18 @@ Main Agent 可发现全部 Skill，但依赖**按需加载**（由 Skill 描述�
 预加载进上下文。节点 01/03/04/11 由 Main Agent 承载，正是因为这些 Skill 是流程编排型、需要对话
 上下文。**本次未修改 Main Agent 职责定义**，现有定位已符合该模型。
 
-## 当前未生效的角色
+## 本机生效状态与验收边界
 
-- 全局 `general-purpose.md` / `Plan.md` 只有旧插件的 `enabled: false`，缺少新插件
-  要求的 `name` 和 `description`，因此当前不会被新插件发现。用户设置另有
-  `subagents.disableBuiltins: true`；本目录没有修改这些全局文件或设置。
+本机用户设置中 `subagents.disableBuiltins: true`；本目录八个源定义均不是
+运行时自动加载文件。`Plan` 和 `Implement` 已在用户级目录生效，但当前用户级
+`Plan` 缺少仓库源定义的稳定需求/验收 ID、双向覆盖检查与缺项阻断。不能把修改
+仓库源当作修复运行时问题，也不能把输出中的 `ready for implementation` 当成人类批准。
 
-- 节点 03/06 仍由 Main Agent 承接 Plan 类工作；没有为了流程节点另建 Agent。
-  `general-purpose` 保持原状。需要恢复它们时须单独适配并验证定义。
-
-全局 `~/.pi/agent/agents/README.md` 没有 Agent frontmatter，新插件跳过它；
-README 只是说明文档，不是长期 Subagent。本次没有移动、删除或转换它。
+本机 `Implement` 的 `acceptanceRole: writer` 被插件推断为 `checked`，发现结果
+列出了必需 `CodeReview`；这属于该插件子任务的默认验收，不会自动验证任务级
+验收标准，也不能代替独立的项目命令。显式调用的验收策略可改变默认行为；
+必须检查每次调用的生效策略、实际运行结果与审查结果。`tools:`/Prompt 约束仍不
+构成命令或文件系统沙箱。
 
 ## 跨工具适配
 
@@ -186,3 +189,5 @@ Plan 声明 `inheritSkills: true`，其他定义采用 `false`；有对应能力
 - 2026-09-26: 新增暂存的 `Implement` 并整理角色 Scope 与 Workflow 映射；
   随后从旧插件字段适配到 `pi-subagents` v0.71.0，修正 Skill 发现、README
   解析和 worktree 行为的旧结论。所有适配仅在本目录生效。
+- 2026-09-28: 在本机 `pi-subagents` v0.73.1 核实八个用户级定义已生效，
+  修正 Plan/Implement 路由说明；仓库源与生效 Plan 的正文差异仍待单独授权同步。
