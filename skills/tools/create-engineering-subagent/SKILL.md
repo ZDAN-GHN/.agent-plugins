@@ -1,6 +1,6 @@
 ---
 name: create-engineering-subagent
-description: 创建或重构可复用 subagent 定义时使用；先识别当前 Agent 与其官方配置格式，再按单一职责、最小权限和可验证输出设计，不能用于临时任务分派、纯审查或通用提示词编写。
+description: 创建或重构可复用 subagent 定义：先识别当前 Agent 及其官方配置格式，再按单一职责、最小权限和可验证输出设计。Use when 用户说"写一个 subagent""建个子 agent""重构这个 agent 定义"，或需要长期复用、输入输出契约稳定的 subagent；一次性任务分派用 Task 工具，只读审查用 subagent-definition-auditor。
 whenToUse: 适用于需要长期复用、具备稳定输入输出契约的 subagent 创建或重构；不适用于一次性委派、纯质量审查、skill 创建、角色命名或未经确认的跨运行时格式迁移。
 user-invocable: true
 ---

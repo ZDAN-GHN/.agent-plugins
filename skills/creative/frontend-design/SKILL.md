@@ -1,7 +1,7 @@
 ---
 name: frontend-design
 description: |
-  Create distinctive, production-grade frontend interfaces with strong visual direction, polished typography, considered layout, and working HTML/CSS/JS or framework code. Use for websites, landing pages, dashboards, React components, application screens, and UI beautification.
+  Create distinctive, production-grade frontend interfaces with strong visual direction, polished typography, and working HTML/CSS/JS or framework code. Use when the user says "做个落地页", "设计一个 dashboard", "写 React 组件", or "美化这个页面"; for motion, radius, and shadow polish use make-interfaces-feel-better, and for an anti-templated art direction use taste-skill.
 triggers:
   - "frontend design"
   - "ui design"

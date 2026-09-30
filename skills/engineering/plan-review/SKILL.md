@@ -1,6 +1,6 @@
 ---
 name: plan-review
-description: 审查已经形成的实现计划，判断其是否足够明确、完整、可验证并可直接交给编码 Agent 执行。只处理会影响实现正确性、执行效率或验收结果的问题，不重新进行需求分析或完整设计。
+description: 仅限用户手动调用（/plan-review）；未显式点名时不要自动选择。审查已形成的实现计划，判断它是否明确、完整、可验证，能否直接交给编码 Agent 执行。Use when 用户说"审一下这个计划""这个实现计划能直接开工吗"；单篇 Ticket 审查用 ticket-review，Ticket 尚未拆出时用 to-tickets，本技能不重做需求分析或完整设计。
 disable-model-invocation: true
 ---
 

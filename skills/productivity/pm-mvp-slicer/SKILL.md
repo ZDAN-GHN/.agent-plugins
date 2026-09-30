@@ -1,6 +1,6 @@
 ---
 name: pm-mvp-slicer
-description: 将完成 Grill 后的当前会话上下文切成最薄且端到端可工作的 MVP Slice；内部提取已确定决策，仅在目标、用户、核心旅程和关键决策已明确时使用，不做需求澄清、技术设计或传统 PRD。
+description: 仅限用户手动调用（/pm-mvp-slicer）；未显式点名时不要自动选择。把已完成 Grill 的当前会话上下文切成最薄且端到端可工作的 MVP Slice，并从会话中提取已确定决策。Use when 用户说"切一个 MVP""拆成最小可交付切片""瘦身到最薄的版本"，且目标、用户、核心旅程与关键决策已明确；不做需求澄清、技术设计或传统 PRD。
 disable-model-invocation: true
 ---
 

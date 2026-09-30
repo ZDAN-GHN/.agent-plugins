@@ -1,6 +1,6 @@
 ---
 name: planning-and-task-breakdown
-description: Breaks confirmed requirements into ordered, independently verifiable tasks or checkpoints. Use for multi-slice planning when the spec is clear but the implementation order or acceptance mapping is not.
+description: Breaks confirmed requirements into ordered, independently verifiable tasks or checkpoints. Use when the user says "任务怎么拆", "先做哪个", "拆成几步", or asks for an implementation order; for producing Ticket artifacts use to-tickets, for reviewing an existing plan use plan-review, and for reviewing a single ticket use ticket-review.
 ---
 
 # Planning and Task Breakdown

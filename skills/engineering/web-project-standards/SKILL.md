@@ -1,6 +1,6 @@
 ---
 name: web-project-standards
-description: Use when initializing or updating Web project rules, AGENTS.md, CLAUDE.md, TypeScript full-stack conventions, API contract conventions, admin UI standards, or AI-friendly coding standards for a new or existing repository.
+description: Generate or refresh repository rules for Web projects — TypeScript full-stack conventions, shared API contracts, admin UI standards, and AI-friendly coding standards. Use when the user says "给这个 Web 项目定规范", "add API contract conventions", "admin UI 规范"; 只维护 agent 指令文件本身的精简与引用结构用 agents-md，本技能产出的是内容规范而非文件结构。
 ---
 
 # Web Project Standards

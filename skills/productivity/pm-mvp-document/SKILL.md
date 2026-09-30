@@ -1,6 +1,6 @@
 ---
 name: pm-mvp-document
-description: 将完整、可走通的 MVP Slice 忠实展开为短小、边界明确且可由 Coding Agent 直接实现的 MVP Contract；仅在切片已完成时使用，不重新做 Grill、MVP 切片或技术设计。
+description: 仅限用户手动调用（/pm-mvp-document）；未显式点名时不要自动选择。把完整、可走通的 MVP Slice 忠实展开为短小、边界明确且可由 Coding Agent 直接实现的 MVP Contract。Use when 用户说"把 slice 展开成 contract""写成 MVP 契约文档"，且切片已完成；切片的取舍由 pm-mvp-slicer 决定，本技能不再重新做 Grill、MVP 切片或技术设计。
 disable-model-invocation: true
 ---
 

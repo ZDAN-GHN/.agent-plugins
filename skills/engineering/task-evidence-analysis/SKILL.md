@@ -1,6 +1,6 @@
 ---
 name: task-evidence-analysis
-description: Analyze a change request or incident before implementation by producing repository-backed impact evidence, validation entry points, risks, and explicit unknowns. Use for task intake and incident investigation; do not use it to implement a change or assert an unproven root cause.
+description: Gather repository-backed evidence before implementation — change impact, validation entry points, risks, and explicit unknowns. Use when the user says "改之前先看看影响", "这个改动会动到哪些地方", "task intake", or a change request arrives without impact analysis yet; for an already-reported failure use incident-evidence-diagnosis, and never implement or declare a root cause here.
 ---
 
 # Task Evidence Analysis

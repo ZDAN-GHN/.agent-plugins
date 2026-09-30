@@ -1,6 +1,6 @@
 ---
 name: pandoc-docx-template
-description: "Use this skill when converting Markdown to Word DOCX or DOCX back to Markdown with Pandoc, especially when the output should use the bundled Chinese Word reference templates, heading numbering variants, list indentation variants, SCI paper templates, and Lua filters for HTML tags, image captions, font color, and inline code styles."
+description: "Use this skill when converting Markdown to Word DOCX or DOCX back to Markdown with Pandoc, especially when the user says \"转成 Word\" or \"docx 转回 markdown\", and the output should use the bundled Chinese Word reference templates, heading numbering, list indentation, SCI paper templates, and Lua filters for image captions, font color, and inline code styles. Not for unrelated Markdown authoring or Word automation."
 ---
 
 # Pandoc DOCX Template

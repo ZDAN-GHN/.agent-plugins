@@ -1,6 +1,6 @@
 ---
 name: create-sop-skill
-description: 按业界最佳实践创建、设计或重构 SOP 类 Agent Skill（技能）。
+description: 仅限用户手动调用（/create-sop-skill）；未显式点名时不要自动选择。按业界最佳实践创建、设计或重构 SOP 类 Agent Skill（技能）。Use when 用户说"写一个技能""新建 SOP 技能""重构这个技能"；只读质量审查用 skill-quality-auditor，自动优化与评测用 darwin-skill。
 disable-model-invocation: true
 ---
 

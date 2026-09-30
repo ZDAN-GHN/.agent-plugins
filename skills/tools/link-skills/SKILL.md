@@ -1,6 +1,6 @@
 ---
 name: link-skills
-description: Use when the user runs /link-skills, wants to symlink skills from ~/.agent-plugins/skills to a project or global CLI skills directory, or asks to install/link specific skills to the current project.
+description: 仅限用户手动调用（/link-skills）；未显式点名时不要自动选择。Use when the user runs /link-skills，或要把 ~/.agent-plugins/skills 下已存在的技能软链到某个项目或 CLI 的全局技能目录；下载或安装一个新技能用 install-skill。
 disable-model-invocation: true
 ---
 

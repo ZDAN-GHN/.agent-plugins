@@ -1,6 +1,6 @@
 ---
 name: to-tickets
-description: 将计划、规格或当前对话分解为中文工程 Ticket Graph。每个 Ticket 记录工程边界、真实阻塞依赖、拆解性质和所需能力，供下游 Orchestrator 再拆为可服务子问题并调度 capability-bound Subagent。
+description: 仅限用户手动调用（/to-tickets）；未显式点名时不要自动选择。把计划、规格或当前对话分解为中文工程 Ticket Graph，每个 Ticket 记录工程边界、真实阻塞依赖、拆解性质和所需能力，供下游 Orchestrator 再拆为可服务子问题。Use when 用户说"拆成 ticket""分解成工单""拆 ticket graph"；只排实施顺序用 planning-and-task-breakdown，审单个 Ticket 用 ticket-review。
 disable-model-invocation: true
 metadata:
   upstream: mattpocock/skills@v1.1.0

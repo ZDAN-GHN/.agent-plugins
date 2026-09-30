@@ -1,6 +1,6 @@
 ---
 name: skill-quality-auditor
-description: 审查 skill 是否把经验写成清晰、可触发、可执行、可验证且安全的说明。技能首次创建并准备定稿时使用，或用户明确要求审查某个 skill 时使用；普通 skill 使用、实现功能或修复业务代码时不要触发。
+description: 审查 skill 是否把经验写成清晰、可触发、可执行、可验证且安全的说明。Use when 创建或更新 skill 后准备定稿，或用户说"审一下这个 skill""用 skill-quality-auditor 过一遍""skill 上线前复核"；普通 skill 使用、实现功能、修复业务代码或审查 subagent 定义时不要触发。
 ---
 
 # Skill Quality Auditor

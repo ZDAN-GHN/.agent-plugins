@@ -19,11 +19,27 @@
 | 场景 | 必读入口 |
 | --- | --- |
 | 标准变更、低风险例外、事故状态或任务记录 | [`task-loops.md`](../assets/closed-loop/task-loops.md)、[`task-record-template.md`](../assets/closed-loop/protocols/task-record-template.md) |
-| 变更前取证 | `task-evidence-analysis` Skill |
-| 事故诊断 | `incident-evidence-diagnosis` Skill |
+| 变更前取证（"改之前先看影响"、"这个改动会动到哪些地方"） | `task-evidence-analysis` Skill |
+| 事故诊断（"线上报错"、"偶发复现不了"、"查根因"） | `incident-evidence-diagnosis` Skill |
 | 涉及实质设计选择、复杂领域/业务逻辑、有状态、数据、接口、外部依赖、跨模块流程或其他明显工程风险的实现 | [`engineering-quality.md`](../assets/closed-loop/protocols/engineering-quality.md) |
 | 验证执行与证据 | [`validation-execution.md`](../assets/closed-loop/protocols/validation-execution.md) |
-| 交付审查 | [`change-review.md`](../assets/closed-loop/protocols/change-review.md)；适用时 `code-review` 或 `clean-code-reviewer` Skill |
+| 交付审查 | [`change-review.md`](../assets/closed-loop/protocols/change-review.md)；固定基线的双轴审查用 `code-review`，纯可读性与 Clean Code 用 `clean-code-reviewer` Skill |
+
+## 技能路由（先确定加载哪个 Skill）
+
+模型只能依据常驻目录里的 `name` + `description` 选择 Skill；`when_to_use` / `triggers` 等字段不会进入上下文，因此适用条件必须写在 `description` 里。命中下列语句时直接加载对应 Skill，不要手工重复其步骤。本表只决定"加载哪个 Skill"；是否委派 Subagent 仍按下方协作规则判定。
+
+| 用户真实语句（关键词） | 加载的 Skill |
+| --- | --- |
+| 实现 / 开发 / 写代码 / 落地 spec / 修这个 bug | `realize`；判定需要 TDD 时再加载 `realize-tdd` |
+| 任务怎么拆 / 先做哪个 / 实施顺序 | `planning-and-task-breakdown` |
+| 拷问我 / grill me / 方案评估 / 架构风险检查 | `grilling` |
+| 写个 AGENTS.md / 更新 CLAUDE.md / 维护 agent 文档 | `agents-md` |
+| 给这个 Web 项目定规范 / API 契约约定 | `web-project-standards` |
+| UI 细节打磨 / hover、阴影、圆角、动效克制 | `make-interfaces-feel-better` |
+| 做落地页 / 反模板化的视觉方向 | `frontend-design` / `taste-skill` |
+
+以下技能**仅在用户显式 `/名称` 调用时使用，不得自动加载**（它们的 `description` 已写明此边界）：`to-spec`、`to-tickets`、`plan-review`、`ticket-review`、`handoff`、`pm-mvp-slicer`、`pm-mvp-document`、`grill-me`、`readme-crafter-skill`、`find-skills`、`install-skill`、`link-skills`、`conversation-record`、`cli-creator`、`darwin-skill`、`boost-skill-trigger`、`create-sop-skill`、`create-engineering-subagent`。需要其中之一时，先请用户显式调用，不要代替用户决定。
 
 ## 工程质量基线
 

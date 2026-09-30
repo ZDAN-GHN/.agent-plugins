@@ -1,6 +1,6 @@
 ---
 name: realize-tdd
-description: 使用 RED-GREEN-REFACTOR 循环实现具有稳定测试接缝、独立预期和显著行为风险的功能或修复。Use when realize 判定 TDD 适用，或用户明确要求用 TDD 实现；不用于纯机械改动、无行为变化调整或没有可信独立预期的测试。
+description: 用 RED-GREEN-REFACTOR 实现有稳定测试接缝、独立预期和显著行为风险的功能或修复，前提是已有 spec / ticket 与验收标准。Use when 用户说"用 TDD 实现""先写测试再写实现"，或 realize 判定 TDD 适用；不用于纯机械改动、无行为变化的调整，或找不到可信独立预期可测的部分。
 when_to_use: 当已有 spec、ticket 和 acceptance criteria，且需要用 TDD 实现复杂业务规则、状态转换、数据一致性、不变量或高风险行为时触发。若没有稳定 test seam、独立预期或相关项目验证入口，回到 realize 选择定向验证。
 ---
 

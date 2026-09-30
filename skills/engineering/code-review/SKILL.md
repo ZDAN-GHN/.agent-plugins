@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "Review committed changes since a fixed point (commit, branch, tag, or merge-base) on separate Standards and Spec axes. Use when the user asks to review a branch, PR, or changes since a specified revision."
+description: Two-axis (Standards / Spec) review of the diff between HEAD and a fixed point the user pins — a commit SHA, branch, tag, or merge-base. Use when the user says "review 一下这个改动", "审查这个 PR/分支", or "从某个 commit 开始看 diff"; an uncommitted working-tree diff goes to the bounded review path in change-review.md, pure readability and Clean Code structure to clean-code-reviewer, and trust-boundary analysis to Security Audit.
 ---
 
 Two-axis review of the diff between `HEAD` and a fixed point the user supplies:

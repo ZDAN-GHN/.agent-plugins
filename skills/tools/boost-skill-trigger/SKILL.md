@@ -1,6 +1,6 @@
 ---
 name: boost-skill-trigger
-description: 用户手动调用（/boost-skill-trigger <技能名>）。用于提高某个技能的触发率/命中率、让技能更频繁或更可靠地自动触发（boost skill trigger rate, make skill fire reliably），且不改动目标技能的任何文件：加 AGENTS.md/CLAUDE.md 指针、可选 UserPromptSubmit hook、Claude Code listing 预算管理。发现技能定义（元数据）问题只做只读诊断并报告，修改元数据超出本技能范围。
+description: 仅限用户手动调用（/boost-skill-trigger <技能名>）；未显式点名时不要自动选择。提高某个技能的触发率/命中率、让它更频繁或更可靠地自动触发（boost skill trigger rate, make skill fire reliably），且全程不改目标技能任何文件：加 AGENTS.md/CLAUDE.md 指针、可选 UserPromptSubmit hook、listing 预算管理；发现目标技能元数据有问题时只做只读诊断报告。
 disable-model-invocation: true
 ---
 
@@ -16,8 +16,8 @@ disable-model-invocation: true
 
 ## 核心事实（方案取舍的依据，勿凭直觉改动）
 
-1. 模型触发技能的唯一依据是常驻 system prompt 的元数据：`name` + `description`（+ `when_to_use`）。SKILL.md 正文不参与匹配。→ 推论：本技能既不能改正文也不能改元数据，可用手段只有三条——**第二触发路径**（指令文件指针）、**确定性注入**（hook）、**排除预算性失明**（listing 裁剪）。
-2. 不存在"强制触发"开关；只有反向开关 `disable-model-invocation: true`（禁止自动触发）。目标技能若带此键，本技能全部手段都以自动触发面为前提、大概率失效——第 0 步闸门会拦截。
+1. 模型触发技能的唯一依据是常驻 system prompt 的元数据：Kilo 只注入 `name` + `description`，Claude Code / DSH 另计 `when_to_use` / `whenToUse`。SKILL.md 正文不参与匹配。→ 推论：本技能既不能改正文也不能改元数据，可用手段只有三条——**第二触发路径**（指令文件指针）、**确定性注入**（hook）、**排除预算性失明**（listing 裁剪）。
+2. 不存在"强制触发"开关；只有反向开关 `disable-model-invocation: true`（禁止自动触发），**且只有真正实现它的 agent 才生效**——Kilo 不识别该键，手动技能照常进入模型目录，只能另配 `permission.skill` 按名 deny 才能移出目录（见 `reference/description-patterns.md`）。在支持该键的 agent 上，目标技能若带此键，本技能全部手段都以自动触发面为前提、大概率失效——第 0 步闸门会拦截。
 3. CLAUDE.md / AGENTS.md 是与技能列表**互相独立**的第二条常驻上下文路径。这是本技能的主力手段。
 4. Claude Code 的技能 listing 有总字符预算（`SLASH_COMMAND_TOOL_CHAR_BUDGET`），超预算时**最少被调用的技能描述先被丢弃**；单技能 `description`+`when_to_use` 合计截断于 1536 字符。命中率低可能是"被裁剪"而非"写得差"——前者归本技能管（第 3 层预算），后者是定义问题（只诊断）。
 5. 同一 YAML 键名跨 agent 不一致：Claude Code 用 `when_to_use`，DSH 用 `whenToUse`。写错拼写 = 字段静默失效 = 定义问题（诊断信号，不代修）。

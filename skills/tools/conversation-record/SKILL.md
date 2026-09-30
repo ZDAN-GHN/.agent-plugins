@@ -1,6 +1,6 @@
 ---
 name: conversation-record
-description: 用于在用户手动调用 `/conversation-record` 时，将当前会话的指定片段或用户粘贴的对话整理为忠实、可引用的 `User:` / `Agent:` 逐轮记录；不用于总结、改写立场或虚构缺失内容。
+description: 仅限用户手动调用（/conversation-record）；未显式点名时不要自动选择。将当前会话的指定片段或用户粘贴的对话整理为忠实、可逐字引用的 User: / Agent: 逐轮记录；不做总结、不改写立场、不虚构缺失内容。
 argument-hint: "可选：要记录的轮次、时间范围或用途"
 disable-model-invocation: true
 ---

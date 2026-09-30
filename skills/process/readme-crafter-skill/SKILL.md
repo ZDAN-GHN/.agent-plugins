@@ -1,14 +1,12 @@
 ---
 name: readme-crafter-skill
 description: >
-  Creates repository-specific README.md files that act as landing pages,
-  onboarding guides, and trust signals. Use when the user asks to write,
-  rewrite, improve, audit, localize, or restructure a README, or when a
-  codebase needs a GitHub-facing project overview. Common triggers include
-  "write a README", "improve my README", "generate README.md", "rewrite this
-  project overview", and "make this repo easier to understand". Adapts to
-  libraries, CLI tools, apps, research repos, browser extensions, internal
-  tools, monorepos, and bilingual README workflows.
+  仅限用户手动调用（/readme-crafter-skill）；未显式点名时不要自动选择。Creates
+  repository-specific README.md files that act as landing pages, onboarding
+  guides, and trust signals. Use when the user says "write a README", "improve
+  my README", or "make this repo easier to understand"; adapts to libraries,
+  CLI tools, apps, monorepos, and bilingual workflows, not to API reference
+  documentation.
 disable-model-invocation: true
 ---
 

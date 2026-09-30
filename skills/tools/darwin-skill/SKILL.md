@@ -1,6 +1,6 @@
 ---
 name: darwin-skill
-description: "Darwin Skill 2.0 (达尔文.skill 2.0): autonomous skill optimizer, v2.0 integrates Microsoft Research SkillLens (arXiv 2605.23899) 9-dim rubric + SkillOpt (arXiv 2605.23904) validation-gated design + human-in-the-loop checkpoints. Evaluates SKILL.md files using a 9-dimension rubric (structure + effectiveness + meta-skill blacklists), runs hill-climbing with git version control, spawns independent judge agents for blind evaluation, validates improvements through test prompts with auto-break on diminishing returns, and generates visual result cards. "
+description: 仅限用户手动调用（/darwin-skill）；未显式点名时不要自动选择。Autonomous SKILL.md optimizer — hill-climbs a 9-dimension rubric under git version control, spawns blind judge agents, and gates every accepted change through test prompts with auto-break on diminishing returns. Use when 用户说"用 darwin 优化这个技能""自动评测 SKILL.md""SkillLens 打分"；只读质量审查用 skill-quality-auditor。
 disable-model-invocation: true
 ---
 

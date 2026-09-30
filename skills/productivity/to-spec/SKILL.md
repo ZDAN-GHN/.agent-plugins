@@ -1,6 +1,6 @@
 ---
 name: to-spec
-description: "将已完成 Grill Me 讨论的需求、架构和约束固化为可审阅、可追溯的中文 Engineering Specification；用于进入 to-tickets 之前，不重新访谈或替代设计决策。"
+description: 仅限用户手动调用（/to-spec）；未显式点名时不要自动选择。把已完成 Grill Me 讨论的需求、架构与约束固化为可审阅、可追溯的中文 Engineering Specification。Use when 用户说"把讨论写成 spec""出一份规格文档""固化成 spec"；讨论尚未收敛先用 grilling，spec 之后拆 Ticket 用 to-tickets。
 disable-model-invocation: true
 metadata:
   skill: to-spec

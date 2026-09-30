@@ -1,6 +1,6 @@
 ---
 name: show-me
-description: Help the user understand the current topic visually with concise diagrams, code-shape sketches, and focused HTML artifacts.
+description: Help the user understand the current topic visually with concise diagrams, code-shape sketches, and focused HTML artifacts. Use when the user says "画个图", "示意图", "用图解释一下", "给我看个流程图", or asks to see a concept rather than read it; not for implementing UI code or producing production design files.
 ---
 
 Help the user understand the current topic of conversation visually. Skip the preamble and keep prose brief. Pick the smallest view that makes the key point clear.

@@ -1,6 +1,6 @@
 ---
 name: subagent-definition-auditor
-description: 只读审查既有 subagent 定义的运行时兼容性、能力边界、权限、路由和验证性时使用；不创建、重构、写入或运行 subagent。
+description: 只读审查既有 subagent 定义的运行时兼容性、能力边界、权限、路由和验证性。Use when 用户说"审一下这个 subagent""上线前复核 agent 定义"或做角色体系治理；创建或重构定义用 create-engineering-subagent，审查 skill 定义用 skill-quality-auditor，本技能不创建、不重构、不写入、不运行 subagent。
 whenToUse: 适用于独立质量审查、上线前复核或角色体系治理；不适用于创建新定义、修复实现任务或临时任务委派。
 user-invocable: true
 ---

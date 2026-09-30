@@ -1,6 +1,6 @@
 ---
 name: install-skill
-description: Use when given a skill URL, GitHub path, or skills.sh package (owner/repo@skill, e.g. handed off from find-skills after user confirmation) to install. Installs to ~/.agent-plugins/skills/<category>/ first, then optionally links to any installed agent's user-level skill directory (Claude Code, Codex, DSH, pi) or the current project.
+description: 仅限用户手动调用（/install-skill）；未显式点名时不要自动选择。Use when given a skill URL, GitHub path, or skills.sh package (owner/repo@skill) to install；先装到 ~/.agent-plugins/skills/<category>/，再按需链接到任一已安装 agent 的用户级技能目录或当前项目。安装新技能用本技能；把仓库里已存在的技能链到别的目录用 link-skills。
 disable-model-invocation: true
 ---
 

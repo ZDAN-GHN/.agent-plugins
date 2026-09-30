@@ -1,6 +1,6 @@
 ---
 name: ticket-review
-description: 审查已经形成的 Ticket，判断其是否忠实于 Requirement / Spec、范围清晰、验收可验证、依赖明确并足够独立，可以进入实现计划阶段。只发现会影响需求正确性、执行边界或验收结果的问题，不重新进行完整需求分析或方案设计。
+description: 仅限用户手动调用（/ticket-review）；未显式点名时不要自动选择。审查已形成的单个 Ticket，判断它是否忠实于 Requirement / Spec、范围清晰、验收可验证、依赖明确且足够独立，可进入实现计划阶段。Use when 用户说"审一下这个 ticket""这个 ticket 能进开发吗"；整份实现计划审查用 plan-review，Ticket 尚未存在时用 to-tickets。
 disable-model-invocation: true
 ---
 

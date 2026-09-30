@@ -1,6 +1,6 @@
 ---
 name: incident-evidence-diagnosis
-description: Diagnose a reported incident before repair by separating symptoms, reproduction evidence, trigger conditions, root-cause hypotheses, confidence, and repair candidates. Use for incident investigation; do not use it to implement a repair or mark an unreproduced incident fixed.
+description: Diagnose a reported incident before repair by separating symptoms, reproduction evidence, trigger conditions, root-cause hypotheses, confidence, and repair candidates. Use when the user says "线上报错", "偶发失败复现不了", "查一下根因", or an incident is reported but not yet diagnosed; for a change request that has not failed yet use task-evidence-analysis, and never implement the repair or mark an unreproduced incident fixed.
 ---
 
 # Incident Evidence Diagnosis

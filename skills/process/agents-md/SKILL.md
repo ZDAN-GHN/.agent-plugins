@@ -1,6 +1,6 @@
 ---
 name: agents-md
-description: Creates and maintains concise AGENTS.md and CLAUDE.md project instruction files. Use when asked to create AGENTS.md, update AGENTS.md, maintain agent docs, set up CLAUDE.md, document repository agent conventions, or keep coding-agent instructions minimal and reference-backed.
+description: Creates and maintains concise AGENTS.md and CLAUDE.md project instruction files. Use when the user says "写个 AGENTS.md", "更新 CLAUDE.md", "维护 agent 文档", or "把仓库约定整理成 agent 指令文件", or wants coding-agent instructions kept minimal and reference-backed; for a Web/TypeScript project's full engineering standards use web-project-standards.
 ---
 
 # Maintaining AGENTS.md

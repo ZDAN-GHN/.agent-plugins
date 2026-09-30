@@ -1,6 +1,6 @@
 ---
 name: handoff
-description: Compact the current conversation into a handoff document for another agent to pick up.
+description: 仅限用户手动调用（/handoff）；未显式点名时不要自动选择。Compact the current conversation into a handoff document for another agent to pick up. Use when 用户说"写个交接文档""整理成交接""handoff""换个 agent 接着做"；本技能只产出交接文档，不执行文档中描述的任务。
 argument-hint: "What will the next session be used for?"
 disable-model-invocation: true
 ---

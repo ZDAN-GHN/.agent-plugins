@@ -12,6 +12,25 @@
 4. **前置关键用例**。Claude Code 中 `description` + `when_to_use` 合计在 listing 里截断于 1536 字符——最重要的触发词应在最前面；超长被截断 = 尾部触发词整体失效。
 5. **区分度**。与兄弟技能的触发词错开；描述雷同是错误触发/被遮蔽的主因。
 
+## Kilo 的目录可见性与排除机制（2026-09-30 官方文档 + 源码核实）
+
+判据 2/3/5 是否成立，取决于**各 agent 把哪些 frontmatter 字段送进模型可见的技能目录**。字段没进目录，写得再好也不参与匹配。
+
+| Agent | 注入模型的字段 | `when_to_use` / `whenToUse` / `triggers` | `disable-model-invocation: true` |
+| --- | --- | --- | --- |
+| Kilo | `name`、`description`、文件路径 | **忽略**——解析器只保留 name/description/location/content | **忽略**——不属于规范字段，被当作未知键丢弃 |
+| Claude Code / DSH / pi | 见本文件末尾的键名表（本仓库既有记录，未在本次重新核实） | 见下表 | 见下表 |
+
+Kilo 侧证据：`https://kilo.ai/docs/customize/skills` —— "Only the metadata (name, description, and file path) is read at this stage"；加载器 `isSkillFrontmatter` 只校验 name/description，`Info` 结构体只含 name/description/location/content/trusted；官方 Claude 迁移器 `parseSkill()` 用 `name/description/license/compatibility/metadata` 白名单校验，遇到该键直接判定 `skill-frontmatter-unsupported` 并跳过整条技能。
+
+**Kilo 不存在 listing 字符预算或截断**：`Skill.fmt()` 与 v2 `SkillGuidance.render()` 全量拼接、无长度常量；环境变量表无 `SLASH_COMMAND_TOOL_CHAR_BUDGET` 对应项（那是 Claude Code 内部实现）；`app.kilo.ai/config.json` 的 `skills` 只有 paths/urls。唯一长度约束是规范要求 `description ≤ 1024` 字符，属合规上限而非运行时裁剪。因此 Claude Code 的"1536 字符截断"结论**不可外推到 Kilo**。
+
+**Kilo 唯一的目录级排除机制是权限规则，不是 frontmatter**：`permission.skill` 按技能名取 `deny` 时，该技能被 `Skill.available()` 过滤出 `<available_skills>`（目录级排除，模型根本看不到），不是调用级阻止。文档：`https://kilo.ai/docs/getting-started/settings/auto-approving-actions`（`skill` = Loading specialized skills，allow/ask/deny）与 `https://kilo.ai/docs/customize/agent-permissions`。
+
+**可移植写法（本仓库约定）**：无论分发到哪些 agent，`what` 与 `when` 必须完整写在 `description` 里；`when_to_use` / `whenToUse` 只作为 Claude Code / DSH 的补充冗余，不得成为唯一来源。仅手动调用的技能在 `description` 首句显式写明"仅限用户手动调用（/名称）；未显式点名时不要自动选择"——这是 Kilo 下唯一**随技能分发**的负向信号；`disable-model-invocation` 只对真正实现它的 agent 生效，Kilo 下必须另配 `permission.skill` deny 才不进目录。
+
+**批量自检**：`node scripts/verify-skill-metadata.mjs`（仓库根目录运行）一次性校验全部 SKILL.md 的 name/description/触发标记/字面短语/负向边界/手动标记/键名拼写，退出码非 0 表示存在 error 级问题。
+
 ## 诊断示例
 
 🚩 信号（只有主题，无触发信号——定义问题）：
